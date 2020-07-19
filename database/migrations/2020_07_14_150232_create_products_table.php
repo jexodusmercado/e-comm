@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->string('img_path_front');
-            $table->string('img_path_back');
+            $table->string('imageFront');
+            $table->string('imageBack');
             $table->smallInteger('active')->default(1);
         });
     }

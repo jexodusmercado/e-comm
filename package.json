@@ -24,6 +24,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "vue-router": "^3.3.4"
+        "dom-to-image": "^2.6.0",
+        "dom-to-image-more": "^2.8.0",
+        "fabric": "^3.6.3",
+        "vue-router": "^3.3.4",
+        "vue-swatches": "^2.1.0"
     }
 }
