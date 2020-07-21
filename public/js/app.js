@@ -2014,6 +2014,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2086,6 +2091,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     changeColor: function changeColor() {
       var bgcolor = this.color;
       document.getElementById('tshirt_front').style.backgroundColor = bgcolor;
+      document.getElementById('tshirt_back').style.backgroundColor = bgcolor;
+    },
+    disableFront: function disableFront() {
+      var btnFront = document.getElementById('btn-front');
+      var btnBack = document.getElementById('btn-back');
+      btnBack.classList.add('active');
+      btnFront.classList.remove('active');
+      this.hide_front = false;
+      this.hide_back = true;
+    },
+    disableBack: function disableBack() {
+      var btnFront = document.getElementById('btn-front');
+      var btnBack = document.getElementById('btn-back');
+      btnFront.classList.add('active');
+      btnBack.classList.remove('active');
+      this.hide_front = true;
+      this.hide_back = false;
+    },
+    uploadPhoto: function uploadPhoto(event) {
+      var canvas_front = new fabric__WEBPACK_IMPORTED_MODULE_3__["fabric"].Canvas('canvas_1');
+      var canvas_back = new fabric__WEBPACK_IMPORTED_MODULE_3__["fabric"].Canvas('canvas_2');
+      var reader = new FileReader();
+      var hideFront = this.hide_front;
+      var hideBack = this.hide_back;
+
+      reader.onload = function (f) {
+        var imgObj = new Image();
+        imgObj.src = f.target.result;
+
+        imgObj.onload = function () {
+          var img = [];
+          img.push(new fabric__WEBPACK_IMPORTED_MODULE_3__["fabric"].Image(imgObj));
+          var lastimg = img[img.length - 1];
+          console.log(lastimg);
+          console.log(img);
+          lastimg.scaleToHeight(300);
+          lastimg.scaleToWidth(300);
+
+          if (hideFront == true) {
+            canvas_front.centerObject(lastimg);
+            canvas_front.add(new fabric__WEBPACK_IMPORTED_MODULE_3__["fabric"].Group(img));
+            canvas_front.renderAll();
+          }
+
+          if (hideBack == true) {
+            canvas_back.centerObject(lastimg);
+            canvas_back.add(lastimg);
+            canvas_back.renderAll();
+          }
+        };
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
 });
@@ -71721,12 +71779,47 @@ var render = function() {
   return _c("div", { staticClass: "container pt-5" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-3" }, [
-        _vm._m(0),
+        _c(
+          "div",
+          {
+            staticClass: "btn-group btn-group-lg pb-3",
+            attrs: { role: "group", "aria-label": "Photo Controls" }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary active",
+                attrs: { type: "button", id: "btn-front" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.disableBack()
+                  }
+                }
+              },
+              [_c("strong", [_vm._v(" FRONT ")])]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-secondary",
+                attrs: { type: "button", id: "btn-back" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.disableFront()
+                  }
+                }
+              },
+              [_c("strong", [_vm._v(" BACK ")])]
+            )
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "pb-3" }, [
-          _c("label", { attrs: { for: "products" } }, [
-            _vm._v(" SELECT PRODUCT ")
-          ]),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "select",
@@ -71739,6 +71832,7 @@ var render = function() {
                   expression: "selectedProduct"
                 }
               ],
+              staticClass: "form-control",
               attrs: { id: "products", name: "products" },
               on: {
                 change: function($event) {
@@ -71780,7 +71874,17 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(1),
+        _c("div", { staticClass: "form-group" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control-file",
+            attrs: { type: "file", name: "photoFile", id: "photoFile" },
+            on: { change: _vm.uploadPhoto }
+          })
+        ]),
+        _vm._v(" "),
+        _vm._m(2),
         _vm._v(" "),
         _c(
           "div",
@@ -71824,22 +71928,24 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-6" }, [
-        this.hide_front
-          ? _c(
-              "div",
-              { staticClass: "tshirt_div", attrs: { id: "tshirt_front" } },
-              [
-                _c("img", {
-                  attrs: {
-                    id: "tshirt_backgroundpicture",
-                    src: "/product/" + _vm.selectedProduct + "_front.png"
-                  }
-                }),
-                _vm._v(" "),
-                _vm._m(2)
-              ]
-            )
-          : _vm._e(),
+        _c(
+          "div",
+          {
+            staticClass: "tshirt_div",
+            class: [this.hide_front ? _vm.active : _vm.inactive],
+            attrs: { id: "tshirt_front" }
+          },
+          [
+            _c("img", {
+              attrs: {
+                id: "tshirt_backgroundpicture",
+                src: "/product/" + _vm.selectedProduct + "_front.png"
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(3)
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -71856,7 +71962,7 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm._m(3)
+            _vm._m(4)
           ]
         )
       ]),
@@ -71870,10 +71976,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pb-3" }, [
-      _c("button", [_vm._v("FRONT")]),
-      _vm._v(" "),
-      _c("button", [_vm._v("BACK")])
+    return _c("label", { attrs: { for: "products" } }, [
+      _c("strong", [_vm._v(" SELECT PRODUCT ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "photoFile" } }, [
+      _c("strong", [_vm._v(" INSERT CUSTOM DESIGN ")])
     ])
   },
   function() {
@@ -71881,7 +71993,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "pb-1" }, [
-      _c("strong", [_vm._v("Please choose a color:")])
+      _c("strong", [_vm._v("PICK A COLOR:")])
     ])
   },
   function() {
