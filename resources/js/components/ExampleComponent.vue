@@ -16,8 +16,19 @@
                         <option value="mens_hoodie"> UNISEX | Sweater</option>
                     </select>
                 </div>
+
+                <div class="pb-1">
+                    <strong>Please choose a color:</strong>
+                </div>
+                <div class="pb-3">
+                    <v-swatches
+                    v-model="color"
+                    swatches="text-advanced"
+                    @close="changeColor()"
+                    ></v-swatches>
+                </div>
                 <div>
-                    <button class="btn btn-primary" @click.prevent="saveProduct()"> SAVE </button>
+                    <button class="btn btn-primary" @click="saveProduct()"> SAVE </button>
                 </div>
                 <div>
 
@@ -50,11 +61,15 @@
 
 <script>
 import domtoimage from 'dom-to-image-more';
+import VSwatches from 'vue-swatches'
 import fabric from 'fabric';
 
     export default {
+        components:{
+            VSwatches
+        },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
         },
         data(){
             return{
@@ -63,7 +78,8 @@ import fabric from 'fabric';
                 hide_back: false,
                 has_errors: false,
                 active: 'show',
-                inactive: 'hide'
+                inactive: 'hide',
+                color: ''
             }
         },
         methods:{
@@ -98,11 +114,14 @@ import fabric from 'fabric';
 
 
             },
+            changeColor(){
+                let bgcolor = this.color;
+                document.getElementById('tshirt_front').style.backgroundColor = bgcolor;
+            }
         }
 
     }
 </script>
-
 <style scoped>
 .drawing_area{
     position: absolute;
@@ -121,8 +140,8 @@ import fabric from 'fabric';
 }
 
 .tshirt_div{
-    width: 452px;
-    height: 548px;
+    width: 530px;
+    height: 630px;
     position: relative;
     background-color: #fff;
 }

@@ -9,6 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="https://unpkg.com/vue-swatches/dist/vue-swatches.css">
         <script src="{{ asset('js/app.js')}}" defer></script>
     </head>
     <body>
@@ -16,4 +17,7 @@
             <router-view></router-view>
         </div>
     </body>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-swatches"></script>
 </html>
