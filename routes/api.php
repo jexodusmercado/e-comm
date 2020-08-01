@@ -14,10 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::prefix('products')->group(function () {
 Route::post('save', 'Api\ProductSave');
+Route::post('asset', 'Api\ProductAsset');
+Route::get('/', 'Api\ProductController@index');
+Route::get('view/{id}', 'Api\ProductController@show');
 });

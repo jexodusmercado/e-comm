@@ -1,232 +1,177 @@
 <template>
-    <div class="container pt-5">
-        <div class="row">
-            <div class="col-3">
-                <div class="btn-group btn-group-lg pb-3" role="group" aria-label="Photo Controls">
-                    <button type="button" id="btn-front" class="btn btn-secondary active" @click.prevent="disableBack()"> <strong> FRONT </strong> </button>
-                    <button type="button" id="btn-back" class="btn btn-secondary" @click.prevent="disableFront()"> <strong> BACK </strong> </button>
+    <div class="container-fluid">
+        <div class="row pb-3">
+            <div class="col">
+                <div class="breadcrumbs">
+                    <h5> HOME > MY PRODUCTS </h5>
                 </div>
-                <div class="pb-3">
-                    <label for="products"> <strong> SELECT PRODUCT </strong> </label>
-                    <select id="products" v-model="selectedProduct" name="products" class="form-control">
-                        <option value="crew"> MEN | Shirt </option>
-                        <option value="mens_longsleeve"> MEN | Long Sleeve</option>
-                        <option value="mens_tank"> MEN | Tank</option>
-                        <option value="womens_crew"> WOMEN | Shirt</option>
-                        <option value="mens_hoodie"> UNISEX | Sweater</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="photoFile"> <strong> INSERT CUSTOM DESIGN </strong> </label>
-                    <input type="file" class="form-control-file" name="photoFile" id="photoFile" @change="uploadPhoto" >
-                </div>
-
-                <div class="pb-1">
-                    <strong>PICK A COLOR:</strong>
-                </div>
-                <div class="pb-3">
-                    <v-swatches
-                    v-model="color"
-                    swatches="text-advanced"
-                    @close="changeColor()"
-                    ></v-swatches>
-                </div>
-                <div>
-                    <button class="btn btn-primary" @click="saveProduct()"> SAVE </button>
-                </div>
-                <div>
-
-                </div>
-            </div>
-            <div class="col-6">
-				<div id="tshirt_front" class="tshirt_div" :class="[this.hide_front ? active : inactive]">
-				    <img id="tshirt_backgroundpicture" :src="'/product/'+selectedProduct+'_front.png'">
-				    <div id="drawingArea_1" class="drawing_area">
-				        <div class="canvas_container">
-				            <canvas id="canvas_1" class="canvas" width="200" height="400"></canvas>
-				        </div>
-				    </div>
-				</div>
-
-                <div id="tshirt_back" class="tshirt_div" :class="[this.hide_back ? active : inactive]">
-				    <img id="tshirt_backgroundpicture" :src="'/product/'+selectedProduct+'_back.png'">
-				    <div id="drawingArea_2" class="drawing_area">
-				        <div class="canvas_container">
-				            <canvas id="canvas_2" class="canvas" width="200" height="400"></canvas>
-				        </div>
-				    </div>
-				</div>
-            </div>
-            <div class="col-3">
             </div>
         </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="bg-white pt-3 pb-3 border">
+                    <button class="btn btn-secondary ml-3" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> FILTER </button>
+
+                    <div class="collapse ml-3 mr-3" id="collapseExample">
+                      <div class="p-3">
+                          <div class="row">
+                          <div class="col-md-2 form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="mens_crew" id="mens_crew" value="mens_crew"  v-model="categories" @change="getData()">
+                            <label for="mens_crew" class="form-check-label">
+                                MENS CREW
+                            </label>
+                          </div>
+                          <div class="col-md-2 form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="mens_longsleeve" id="mens_longsleeve" value="mens_longsleeve" v-model="categories">
+                            <label for="mens_longsleeve" class="form-check-label">
+                                MENS LONGSLEEVE
+                            </label>
+                          </div>
+                          <div class="col-md-2 form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="mens_tank" id="mens_tank" value="mens_tank" v-model="categories">
+                            <label for="mens_tank" class="form-check-label">
+                                MENS TANK
+                            </label>
+                          </div>
+                          <div class="col-md-2 form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="womens_crew" id="womens_crew" value="womens_crew" v-model="categories">
+                            <label for="womens_crew" class="form-check-label">
+                                WOMENS CREW
+                            </label>
+                          </div>
+                          <div class="col-md-2 form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="mens_hoodie" id="mens_hoodie" value="mens_hoodie" v-model="categories">
+                            <label for="mens_hoodie" class="form-check-label">
+                                HOODIE
+                            </label>
+                          </div>
+                          </div>
+
+
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 pt-2" v-for="(item, index) in items" :key="index">
+                <div class="card">
+                  <img class="card-img-top img-fluid" :src="thisURL+'/uploads/'+item.front+'.png'" alt="">
+                  <div class="card-body">
+                    <p class="card-text"></p>
+                    <div class="text-center font-weight-light">
+                        <button class="btn btn-primary">VIEW</button>
+                        <button class="btn btn-danger">DELETE</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-4 pb-2">
+            <div class="product-bar">
+                <div class="col">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-secondary" @click.prevent="getData(links['first']+'&'+check)">First</button>
+                        <button class="btn btn-secondary" @click.prevent="getData(links['prev']+'&'+check)" :disabled="links['prev']==null">Previous</button>
+                        <button class="btn btn-secondary" @click.prevent="getData(links['next']+'&'+check)" :disabled="links['next']==null">Next</button>
+                        <button class="btn btn-secondary" @click.prevent="getData(links['last']+'&'+check)">Last</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </template>
 
+
 <script>
-import domtoimage from 'dom-to-image-more';
-import VSwatches from 'vue-swatches'
-import {fabric} from 'fabric';
+export default {
+    async created(){
+        this.getData();
+    },
+    mounted(){
+        this.test;
 
-    export default {
-        components:{
-            VSwatches
-        },
-        mounted() {
-            console.log('Component mounted.');
-        },
-        data(){
-            return{
-                selectedProduct: 'crew',
-                hide_front: true,
-                hide_back: false,
-                has_errors: false,
-                active: 'show',
-                inactive: 'hide',
-                color: '',
-            }
-        },
-        methods:{
-            getImageUrl(data){
-                return new Promise(resolve => {
-                        resolve(domtoimage.toPng(data));
-                });
-            },
-            async saveProduct(){
-                this.hide_back=true;
-                this.hide_front=true;
-
-
-                let imageFront = document.getElementById('tshirt_front');
-                let imageBack = document.getElementById('tshirt_back');
-                let data1 = await this.getImageUrl(imageFront);
-                let data2 = await this.getImageUrl(imageBack);
-
-                let data = {
-                    imageFront: data1,
-                    imageBack: data2
-                }
-
-                axios.post(`api/products/save`, data)
-                .then(response =>{
-                    this.success = 201 === response.status;
-                })
-                .catch(err =>{
-                    console.log("something is wrong",err)
-                })
-                this.hide_back=false;
-
-
-            },
-            changeColor(){
-                let bgcolor = this.color;
-                document.getElementById('tshirt_front').style.backgroundColor = bgcolor;
-                document.getElementById('tshirt_back').style.backgroundColor = bgcolor;
-            },
-            disableFront(){
-                let btnFront = document.getElementById('btn-front');
-                let btnBack = document.getElementById('btn-back');
-
-                btnBack.classList.add('active');
-                btnFront.classList.remove('active');
-
-                this.hide_front=false;
-                this.hide_back=true;
-
-            },
-            disableBack(){
-                let btnFront = document.getElementById('btn-front');
-                let btnBack = document.getElementById('btn-back');
-
-                btnFront.classList.add('active');
-                btnBack.classList.remove('active');
-
-                this.hide_front=true;
-                this.hide_back=false;
-            },
-            uploadPhoto(event){
-                let canvas_front = new fabric.Canvas('canvas_1');
-                let canvas_back = new fabric.Canvas('canvas_2');
-                let reader = new FileReader();
-                let hideFront = this.hide_front;
-                let hideBack = this.hide_back;
-
-                reader.onload = function (f){
-                    var imgObj = new Image();
-                    imgObj.src = f.target.result;
-
-
-                    imgObj.onload = function () {
-                        let img = [];
-
-                        img.push(new fabric.Image(imgObj));
-
-                        const lastimg = img[img.length - 1];
-                        console.log(lastimg)
-                        console.log(img)
-                        lastimg.scaleToHeight(300);
-                        lastimg.scaleToWidth(300);
-
-                        if(hideFront == true){
-                            canvas_front.centerObject(lastimg);
-                            canvas_front.add(new fabric.Group(img));
-                            canvas_front.renderAll();
-                        }if(hideBack == true){
-                            canvas_back.centerObject(lastimg);
-                            canvas_back.add(lastimg);
-                            canvas_back.renderAll();
-
-                        }
-
-                    };
-                };
-
-                    reader.readAsDataURL(event.target.files[0]);
-            }
+    },
+    data(){
+        return{
+            items: [],
+            thisURL: 'http://localhost',
+            links:[],
+            current:'',
+            total:'',
+            categories: [
+                'mens_crew',
+                'mens_longsleeve',
+                'mens_tank',
+                'womens_crew',
+                'mens_hoodie'
+            ]
         }
 
+    },
+    computed:{
+        check(){
+            let i ='';
+            var query ='';
+
+            for(i=0; i < this.categories.length;i++){
+                if(i === 0){
+                query += 'category[]='+this.categories[i];
+                continue;
+                }
+                query += '&category[]='+this.categories[i];
+            }
+
+            return query;
+        }
+    },
+    methods:{
+        async getData(src){
+            if(!src){
+                src = 'api/products?'+this.check;
+            }
+            try{
+                let result = await (axios.get(src));
+
+                if(Object.keys(result.data).length){
+                this.items = result.data.data;
+                this.links = result.data.links;
+                this.current = result.data.meta.current_page;
+                this.total = result.data.meta.total;
+                }else{
+                    this.items = null;
+                    this.links['prev'] = null;
+                    this.links['next'] = null;
+                    this.links['last'] = null;
+                    this.links['first'] = null;
+                    this.current = null;
+                    this.total = null;
+                }
+
+            } catch (err){
+                console.log(err);
+            }
+
+        },
+
     }
+
+}
 </script>
-<style scoped>
-    .drawing_area{
-        position: absolute;
-        top: 75px;
-        left: 162px;
-        z-index: 10;
-        width: 200px;
-        height: 400px;
-    }
 
-    .canvas_container{
-        width: 200px;
-        height: 400px;
-        position: relative;
-        user-select: none;
+ <style scope>
+    .product-bar{
+        text-align:center;
+        width:100%;
     }
-
-    .tshirt_div{
-        width: 530px;
-        height: 630px;
-        position: relative;
-        background-color: #fff;
+    .form-check{
+        padding-left:10px;
+        font-size: 10px
     }
-
-    .canvas{
-        position: absolute;
-        width: 200px;
-        height: 400px;
-        left: 0px;
-        top: 0px;
-        user-select: none;
-        cursor: default;
-    }
-
-    .hide{
-        display:none;
-    }
-
-    .show{
-        display:block;
-    }
-</style>
+ </style>

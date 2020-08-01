@@ -69,6 +69,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'design_assets' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/design_assets/'),
+            'url' => env('APP_URL').'/design_assets',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -95,6 +102,7 @@ return [
     'links' => [
         public_path('product') => storage_path('app/public/images'),
         public_path('uploads') => storage_path('app/public/uploads'),
+        public_path('design_assets') => storage_path('app/public/design_assets'),
     ],
 
 ];

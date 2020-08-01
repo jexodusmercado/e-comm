@@ -16,10 +16,20 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
+            $table->unsignedBigInteger('user_id')->index();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('imageFront');
             $table->string('imageBack');
-            $table->smallInteger('active')->default(1);
+            $table->string('selectedProduct');
+            $table->Integer('XXS');
+            $table->Integer('XSM');
+            $table->Integer('SML');
+            $table->Integer('MED');
+            $table->Integer('LRG');
+            $table->Integer('XLG');
+            $table->Integer('XXL');
+            $table->Integer('totalQty');
+            $table->Integer('active')->default(1);
         });
     }
 
