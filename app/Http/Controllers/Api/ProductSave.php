@@ -21,14 +21,15 @@ class ProductSave extends Controller
 		    {
                 $validateData = $request->validate([
                     'selectedProduct'=>'required',
-                    'XXS'=>'required',
-                    'XSM'=>'required',
-                    'SML'=>'required',
-                    'MED'=>'required',
-                    'LRG'=>'required',
-                    'XLG'=>'required',
-                    'XXL'=>'required',
-                    'totalQty' => 'required'
+                    'userId'=>'required',
+                    'XXS'=>'required|integer|min:1',
+                    'XSM'=>'required|integer|min:1',
+                    'SML'=>'required|integer|min:1',
+                    'MED'=>'required|integer|min:1',
+                    'LRG'=>'required|integer|min:1',
+                    'XLG'=>'required|integer|min:1',
+                    'XXL'=>'required|integer|min:1',
+                    'totalQty' => 'required|integer|min:1'
                 ]);
 
 		        //image decode and upload to server
@@ -45,6 +46,7 @@ class ProductSave extends Controller
 
                 //getting value from page
                 $selectedProduct = $request->selectedProduct;
+                $userId = $request->userId;
                 $XXS = $request->XXS;
                 $XSM = $request->XSM;
                 $SML = $request->SML;
@@ -60,6 +62,7 @@ class ProductSave extends Controller
 			    $product->imageFront = $imageFront_name;
                 $product->imageBack = $imageBack_name;
                 $product->selectedProduct = $selectedProduct;
+                $product->user_id = $userId;
                 $product->XXS = $XXS;
                 $product->XSM = $XSM;
                 $product->SML = $SML;
@@ -76,7 +79,7 @@ class ProductSave extends Controller
 			    	return response()->json(['status' => 'Failed'], 404);
 			    }
 		    } else {
-                return response()->json(['status' => ''], 400);
+                return response()->json(['status' => 'No image'], 400);
             }
 
 

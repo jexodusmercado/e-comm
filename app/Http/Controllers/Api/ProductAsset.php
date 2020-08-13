@@ -16,20 +16,20 @@ class ProductAsset extends Controller
      */
     public function __invoke(Request $request)
     {
-        $validateData = $request->validate([
-            'asset_image'=>'required|mimes:jpeg,jpg,png|max:99999999'
-        ]);
-        $file = $request->file('asset_image');
-        $name = uniqid() . '_' . time(). '.' . $file->getClientOriginalExtension();
-        $path = public_path() . '/design_assets';
-        $res = $file->move($path, $name);
+        // $validateData = $request->validate([
+        //     'asset_image'=>'required|mimes:jpeg,jpg,png|max:99999999'
+        // ]);
+        // $file = $request->file('asset_image');
+        // $name = uniqid() . '_' . time(). '.' . $file->getClientOriginalExtension();
+        // $path = public_path() . '/design_assets';
+        // $res = $file->move($path, $name);
 
-        if($res){
-            return response()->json(['status' => 'success','file_name' => $name], 200);
+        // if($res){
+        //     return response()->json(['status' => 'success','file_name' => $name], 200);
 
-        }else{
-            return response()->json(['status' => 'fail'], 422);
-        }
+        // }else{
+        //     return response()->json(['status' => 'fail'], 422);
+        // }
 
 
     }

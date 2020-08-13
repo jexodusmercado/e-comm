@@ -14,13 +14,38 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+
 
 Route::prefix('products')->group(function () {
-Route::post('save', 'Api\ProductSave');
-Route::post('asset', 'Api\ProductAsset');
-Route::get('/', 'Api\ProductController@index');
-Route::get('view/{id}', 'Api\ProductController@show');
+    Route::get('/{id}', 'Api\ProductController@index');
+    Route::get('remove/{id}', 'Api\ProductController@edit');
+    Route::get('view/{id}', 'Api\ProductController@show');
+    Route::post('save', 'Api\ProductSave');
+    Route::post('asset', 'Api\ProductAsset');
+});
+
+Route::prefix('user')->group(function (){
+    Route::get('/view/{id}', 'Api\UserController@show');
+    Route::get('/notVerified', 'Api\UserController@showUnverified');
+    Route::post('/update/{id}', 'Api\UserController@update');
+});
+
+Route::prefix('auction')->group(function(){
+    Route::get('check/{id}', 'Api\AuctionLinesController@show');
+    Route::post('offer', 'Api\AuctionStoreBetController');
+    Route::post('accept', 'Api\AuctionAcceptedBetController');
+});
+
+Route::prefix('market')->group(function () {
+    Route::get('/', 'Api\MarketController@index');
+});
+
+Route::prefix('inquiries')->group(function (){
+    Route::post('/save', 'Api\InquiryStoreController');
+});
+
+Route::prefix('delivery')->group(function (){
+    Route::get('/user/{id}',  'Api\DeliverableController@index');
+    Route::get('/check/{id}', 'Api\DeliverableController@show');
+    Route::post('/status/update/', 'Api\DeliverableController@update');
 });

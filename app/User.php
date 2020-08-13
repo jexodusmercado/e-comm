@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'role','verification_id_img','first_name', 'middle_name', 'last_name', 'address1', 'address2', 'barangay', 'city', 'province', 'mobile_number', 'email', 'password',
     ];
 
     /**
@@ -36,4 +36,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function product(){
+        return $this->hasMany(Product::class);
+    }
+
+    public function auction_line(){
+        return $this->hasMany(Auction_line::class, 'id', 'seller_id');
+    }
+
+    public function deliverable(){
+        return $this->hasMany(Deliverable::class, 'id', 'seller_id');
+    }
 }

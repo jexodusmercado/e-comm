@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
             $table->Integer('XLG');
             $table->Integer('XXL');
             $table->Integer('totalQty');
-            $table->Integer('active')->default(1);
+            $table->dateTime('deleted_at')->nullable();
         });
     }
 

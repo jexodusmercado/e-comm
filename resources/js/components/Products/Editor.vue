@@ -1,7 +1,7 @@
 <template>
     <div class="container pt-5">
-        <loader :show="loading"></loader>
-        <ErrModal ref="errModal" :title="error_data.title" :message="error_data.message"></ErrModal>
+        <Loader :show="loading"></Loader>
+        <Modal ref="errModal" :title="error_data.title" :message="error_data.message"></Modal>
         <div class="row">
             <div class="col-md-3 p-3 border bg-light">
                 <div>
@@ -129,12 +129,9 @@
 import domtoimage from 'dom-to-image-more';
 import VSwatches from 'vue-swatches'
 import {fabric} from 'fabric';
-import ErrModal from '../ErrorModal';
-
     export default {
         components:{
             VSwatches,
-            ErrModal
         },
         mounted() {
             console.log('Component mounted.');
@@ -198,25 +195,26 @@ import ErrModal from '../ErrorModal';
                 let file1 = this.$refs.file1.value;
                 let file2 = this.$refs.file1.value;
 
-
                 let imageFront = document.getElementById('tshirt_front');
                 let imageBack = document.getElementById('tshirt_back');
                 let data1 = await this.getImageUrl(imageFront);
                 let data2 = await this.getImageUrl(imageBack);
+
                 const formData = new FormData();
 
 
-                formData.append("imageFront", data1)
-                formData.append("imageBack", data2)
-                formData.append("selectedProduct", this.selectedProduct)
-                formData.append("XXS", this.XXS)
-                formData.append("XSM", this.XSM)
-                formData.append("SML", this.SML)
-                formData.append("MED", this.MED)
-                formData.append("LRG", this.LRG)
-                formData.append("XLG", this.XLG)
-                formData.append("XXL", this.XXL)
-                formData.append("totalQty", this.totalQty)
+                formData.append("imageFront", data1);
+                formData.append("imageBack", data2);
+                formData.append("selectedProduct", this.selectedProduct);
+                formData.append("userId", "1");
+                formData.append("XXS", this.XXS);
+                formData.append("XSM", this.XSM);
+                formData.append("SML", this.SML);
+                formData.append("MED", this.MED);
+                formData.append("LRG", this.LRG);
+                formData.append("XLG", this.XLG);
+                formData.append("XXL", this.XXL);
+                formData.append("totalQty", this.totalQty);
 
 
                 if(file1 === "" || file2 === ""){
@@ -276,7 +274,6 @@ import ErrModal from '../ErrorModal';
             uploadPhotoFront(event){
                 let file = event.target.files[0];
                 let canvas_1 = new fabric.Canvas('canvas_1');
-                let e_canvas = document.getElementById('canvas_1');
                 let hideFront = this.hide_front;
                 const fileValue = document.getElementById('asset_image');
 
@@ -294,7 +291,7 @@ import ErrModal from '../ErrorModal';
                             canvas_1.renderAll();
                         };
                         imgObj.src = event.target.result;
-                        canvas_1.remove(canvas_1.getActiveObject());
+                        // canvas_1.remove(canvas_1.getActiveObject());
 
     			    };
                     reader.readAsDataURL(file);
@@ -307,19 +304,19 @@ import ErrModal from '../ErrorModal';
 
                  let reader = new FileReader();
 
-        			canvas_2.remove(canvas_2.getActiveObject());
 
     			     reader.onload = function (event){
     			        let imgObj = new Image();
-    			         imgObj.src = event.target.result;
 
     			         imgObj.onload = function () {
-                            let img = new fabric.Image(imgObj);
+                             let img = new fabric.Image(imgObj);
                             img.scale(0.20);
 
     			            canvas_2.add(img);
                             canvas_2.renderAll(img);
     			        };
+    			        imgObj.src = event.target.result;
+                        // canvas_2.remove(canvas_2.getActiveObject());
     			    };
     			    reader.readAsDataURL(file);
                     this.asset_image_2 = true;

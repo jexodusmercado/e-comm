@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+
+        <title>Debuhu</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -14,10 +15,8 @@
     </head>
     <body>
         <div id="app">
-            <index></index>
+            <Index></Index>
         </div>
     </body>
 
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://unpkg.com/vue-swatches"></script>
 </html>

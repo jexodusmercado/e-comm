@@ -1,9 +1,10 @@
 <template>
     <div class="container-fluid">
-        <div class="row pb-3">
+        <loader :show="loading"></loader>
+        <div class="row py-3">
             <div class="col">
                 <div class="breadcrumbs">
-                    <h5> HOME > MY PRODUCTS </h5>
+                    <!-- <router-link :to="{name: 'Editor'}" class="btn btn-primary"> VIEW BID </router-link> -->
                 </div>
             </div>
         </div>
@@ -23,25 +24,25 @@
                             </label>
                           </div>
                           <div class="col-md-2 form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" name="mens_longsleeve" id="mens_longsleeve" value="mens_longsleeve" v-model="categories">
+                            <input type="checkbox" class="form-check-input" name="mens_longsleeve" id="mens_longsleeve" value="mens_longsleeve" v-model="categories" @change="getData()">
                             <label for="mens_longsleeve" class="form-check-label">
                                 MENS LONGSLEEVE
                             </label>
                           </div>
                           <div class="col-md-2 form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" name="mens_tank" id="mens_tank" value="mens_tank" v-model="categories">
-                            <label for="mens_tank" class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="mens_tank" id="mens_tank" value="mens_tank" v-model="categories" @change="getData()">
+                            <label for="mens_tank" class="form-check-label" >
                                 MENS TANK
                             </label>
                           </div>
                           <div class="col-md-2 form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" name="womens_crew" id="womens_crew" value="womens_crew" v-model="categories">
+                            <input type="checkbox" class="form-check-input" name="womens_crew" id="womens_crew" value="womens_crew" v-model="categories" @change="getData()">
                             <label for="womens_crew" class="form-check-label">
                                 WOMENS CREW
                             </label>
                           </div>
                           <div class="col-md-2 form-check form-check-inline">
-                            <input type="checkbox" class="form-check-input" name="mens_hoodie" id="mens_hoodie" value="mens_hoodie" v-model="categories">
+                            <input type="checkbox" class="form-check-input" name="mens_hoodie" id="mens_hoodie" value="mens_hoodie" v-model="categories" @change="getData()">
                             <label for="mens_hoodie" class="form-check-label">
                                 HOODIE
                             </label>
@@ -63,8 +64,7 @@
                   <div class="card-body">
                     <p class="card-text"></p>
                     <div class="text-center font-weight-light">
-                        <button class="btn btn-primary">VIEW</button>
-                        <button class="btn btn-danger">DELETE</button>
+                        <router-link :to="{name:'View Design', params: { id: item.product_id} }" class="btn btn-primary">VIEW</router-link>
                     </div>
                   </div>
                 </div>
@@ -91,30 +91,6 @@
 
 <script>
 export default {
-    async created(){
-        this.getData();
-    },
-    mounted(){
-        this.test;
-
-    },
-    data(){
-        return{
-            items: [],
-            thisURL: 'http://localhost',
-            links:[],
-            current:'',
-            total:'',
-            categories: [
-                'mens_crew',
-                'mens_longsleeve',
-                'mens_tank',
-                'womens_crew',
-                'mens_hoodie'
-            ]
-        }
-
-    },
     computed:{
         check(){
             let i ='';
@@ -131,10 +107,35 @@ export default {
             return query;
         }
     },
+        async created(){
+
+        },
+        async mounted(){
+            this.getData();
+        },
+        data(){
+            return{
+                items: [],
+                myId: this.$store.state.userId,
+                thisURL: 'http://localhost',
+                links:[],
+                current:'',
+                total:'',
+                loading:true,
+                categories: [
+                    'mens_crew',
+                    'mens_longsleeve',
+                    'mens_tank',
+                    'womens_crew',
+                    'mens_hoodie'
+                ]
+            }
+        },
+
     methods:{
         async getData(src){
             if(!src){
-                src = 'api/products?'+this.check;
+                src = 'api/market?'+this.check;
             }
             try{
                 let result = await (axios.get(src));

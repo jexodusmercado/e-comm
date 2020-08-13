@@ -15,16 +15,23 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
-        //dd($request->query('category'));
-        $category = $request->query('category');
-        //dd($category);
+        $category   = $request->query('category');
+        $active     = $request->query('active');
         if($category){
             return ProductIndexResource::collection(
-                Product::whereIn('selectedProduct', $category)->paginate(8)
+                Product::where('user_id', $id)
+                ->where('deleted_at', null)
+                ->whereIn('selectedProduct', $category)
+                ->whereHas('market', function ($query) use ($active){
+                    return $query->whereIn('active', $active);
+                })
+                ->with('market')
+                ->paginate(8)
             );
         }
+
     }
 
     /**
@@ -56,7 +63,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return new ProductShowResource(Product::findOrFail($id));
+            return Product::where('deleted_at',null)
+                          ->findOrFail($id);
     }
 
     /**
@@ -67,7 +75,16 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        if($product){
+            $product->deleted_at = date(now());
+            $product->save();
+
+            return response()->json([]);
+        }else{
+            return response()->json([], 404);
+        }
     }
 
     /**
@@ -79,7 +96,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
