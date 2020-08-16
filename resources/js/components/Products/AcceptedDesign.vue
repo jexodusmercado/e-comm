@@ -78,7 +78,7 @@ export default {
         return{
             items: [],
             myId: this.$store.state.userId,
-            thisURL: 'http://localhost',
+            thisURL: 'http://127.0.0.1:80',
             links:[],
             current:'',
             total:'',

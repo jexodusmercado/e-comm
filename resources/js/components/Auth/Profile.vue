@@ -44,7 +44,7 @@
                         <div class="col-md-12 mt-3" v-for="(comment, index) in comments.data" :key="index" >
                             <dl class="row" v-if="this.$store.state.userRole == 2">
                                 <div class="col-md-3">
-                                    <img :src="'http://localhost/uploads/'+comment.product.imageFront+'.png'" class='img-fluid'>
+                                    <img :src="'http://127.0.0.1:80/uploads/'+comment.product.imageFront+'.png'" class='img-fluid'>
                                     <star-rating :read-only="true" :rating="Number(comment.rating)" :star-size="25" :show-rating="false"> </star-rating>
                                 </div>
                                 <div class="col-md-12">
@@ -95,7 +95,7 @@ export default {
 
         if(this.$store.state.isLoggedIn){
 
-            
+
 
 
             try {

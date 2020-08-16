@@ -20,7 +20,7 @@
                       <th class="align-middle" scope="row">{{ item.delivery_id }}</th>
                       <td class="align-middle">
                           <a @click.prevent="openModal" class="btn">
-                          <img :src="'http://localhost/uploads/'+item.image+'.png'" class="img-thumbnail" width="125rem">
+                          <img :src="'http://127.0.0.1:80/uploads/'+item.image+'.png'" class="img-thumbnail" width="125rem">
                           </a>
                       </td>
                       <td class="align-middle">{{item.full_name}}</td>

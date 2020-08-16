@@ -236,6 +236,7 @@ import {fabric} from 'fabric';
                             let errModal = this.$refs.errModal.$el;
                             this.loading = false;
                             $(errModal).modal('show');
+                            this.$router.push({name: 'My Designs'})
                         } catch (error) {
 
                         }

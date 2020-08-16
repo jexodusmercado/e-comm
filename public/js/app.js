@@ -3884,7 +3884,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       items: [],
       myId: this.$store.state.userId,
-      thisURL: 'http://localhost',
+      thisURL: 'http://127.0.0.1:80',
       links: [],
       current: '',
       total: '',
@@ -4299,7 +4299,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.loading = false;
                 errModal = _this.$refs.errModal.$el;
                 $(errModal).modal('show');
-                _context.next = 55;
+                _context.next = 56;
                 break;
 
               case 34:
@@ -4313,7 +4313,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _errModal = _this.$refs.errModal.$el;
                 _this.loading = false;
                 $(_errModal).modal('show');
-                _context.next = 55;
+                _context.next = 56;
                 break;
 
               case 42:
@@ -4328,22 +4328,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _errModal2 = _this.$refs.errModal.$el;
                 _this.loading = false;
                 $(_errModal2).modal('show');
-                _context.next = 55;
+
+                _this.$router.push({
+                  name: 'My Designs'
+                });
+
+                _context.next = 56;
                 break;
 
-              case 53:
-                _context.prev = 53;
+              case 54:
+                _context.prev = 54;
                 _context.t0 = _context["catch"](42);
 
-              case 55:
+              case 56:
                 _this.hide_back = false;
 
-              case 56:
+              case 57:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[42, 53]]);
+        }, _callee, null, [[42, 54]]);
       }))();
     },
     changeColor: function changeColor() {
@@ -4752,7 +4757,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       items: [],
       myId: this.$store.state.userId,
-      thisURL: 'http://localhost',
+      thisURL: 'http://127.0.0.1:80',
       links: [],
       current: '',
       total: '',
@@ -4972,7 +4977,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       items: [],
       myId: this.$store.state.userId,
-      thisURL: 'http://localhost',
+      thisURL: 'http://127.0.0.1:80',
       links: [],
       current: '',
       total: '',
@@ -78802,7 +78807,7 @@ var render = function() {
                                   staticClass: "img-fluid",
                                   attrs: {
                                     src:
-                                      "http://localhost/uploads/" +
+                                      "http://127.0.0.1:80/uploads/" +
                                       comment.product.imageFront +
                                       ".png"
                                   }
@@ -80661,7 +80666,9 @@ var render = function() {
                           staticClass: "img-thumbnail",
                           attrs: {
                             src:
-                              "http://localhost/uploads/" + item.image + ".png",
+                              "http://127.0.0.1:80/uploads/" +
+                              item.image +
+                              ".png",
                             width: "125rem"
                           }
                         })
@@ -82115,7 +82122,7 @@ var render = function() {
                 staticClass: "card-img-top img-fluid ",
                 style: "height:auto; width:700px;",
                 attrs: {
-                  src: "http://localhost/uploads/" + _vm.image + ".png",
+                  src: "http://127.0.0.1:80/uploads/" + _vm.image + ".png",
                   alt: ""
                 }
               }),
