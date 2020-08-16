@@ -74,7 +74,7 @@
         <div class="row" v-show="items.length">
             <div class="col-md-3 pt-2" v-for="(item, index) in items" :key="index">
                 <div class="card">
-                  <img class="card-img-top img-fluid" :src="thisURL+'/uploads/'+item.front+'.png'" alt="">
+                  <img class="card-img-top img-fluid" :src="thisURL+'/uploads/'+item.front" alt="">
                   <div class="card-body">
                     <p class="card-text text-center">
 

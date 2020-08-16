@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-md-3 pt-2" v-for="(item, index) in items" :key="index">
                 <div class="card">
-                  <img class="card-img-top img-fluid" :src="thisURL+'/uploads/'+item.image+'.png'" alt="">
+                  <img class="card-img-top img-fluid" :src="thisURL+'/uploads/'+item.image" alt="">
                   <div class="card-body">
                     <p class="card-text text-center">
                         <span class="h4" v-show="item.delivery_status == 0">

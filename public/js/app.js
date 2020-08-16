@@ -79798,10 +79798,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("img", {
                 staticClass: "card-img-top img-fluid",
-                attrs: {
-                  src: _vm.thisURL + "/uploads/" + item.image + ".png",
-                  alt: ""
-                }
+                attrs: { src: _vm.thisURL + "/uploads/" + item.image, alt: "" }
               }),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
@@ -80665,10 +80662,7 @@ var render = function() {
                         _c("img", {
                           staticClass: "img-thumbnail",
                           attrs: {
-                            src:
-                              "http://127.0.0.1:80/uploads/" +
-                              item.image +
-                              ".png",
+                            src: "http://127.0.0.1:80/uploads/" + item.image,
                             width: "125rem"
                           }
                         })
@@ -81193,10 +81187,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("img", {
                 staticClass: "card-img-top img-fluid",
-                attrs: {
-                  src: _vm.thisURL + "/uploads/" + item.front + ".png",
-                  alt: ""
-                }
+                attrs: { src: _vm.thisURL + "/uploads/" + item.front, alt: "" }
               }),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
@@ -81754,10 +81745,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("img", {
                 staticClass: "card-img-top img-fluid",
-                attrs: {
-                  src: _vm.thisURL + "/uploads/" + item.front + ".png",
-                  alt: ""
-                }
+                attrs: { src: _vm.thisURL + "/uploads/" + item.front, alt: "" }
               }),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
@@ -82122,7 +82110,7 @@ var render = function() {
                 staticClass: "card-img-top img-fluid ",
                 style: "height:auto; width:700px;",
                 attrs: {
-                  src: "http://127.0.0.1:80/uploads/" + _vm.image + ".png",
+                  src: "http://127.0.0.1:80/uploads/" + _vm.image,
                   alt: ""
                 }
               }),
@@ -83169,7 +83157,7 @@ var render = function() {
             staticClass: "img-fluid",
             attrs: {
               id: "img1",
-              src: "http://localhost/uploads/" + _vm.img + ".png"
+              src: "http://127.0.0.1:80/uploads/" + _vm.img + ".png"
             }
           })
         ])
@@ -83426,7 +83414,7 @@ var render = function() {
             staticClass: "img-fluid",
             attrs: {
               id: "img1",
-              src: "http://localhost/verification/" + _vm.img
+              src: "http://127.0.0.1:80/verification/" + _vm.img
             }
           })
         ])
