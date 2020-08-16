@@ -109,7 +109,16 @@ export default {
     async created(){
         if(this.$store.state.isLoggedIn){
             this.loading = true;
-            const pId    = this.$route.params.id
+            const pId    = this.$route.params.id;
+
+            if(this.$store.state.userRole == 3){
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+                this.$router.push({name:'Home'});
+                $(pModal).modal('show');
+            }
+
             try {
                 const response = await axios.get('/api/auction/check/'+pId);
                 this.items = response.data;
@@ -123,12 +132,6 @@ export default {
             }
 
             this.loading = false;
-        }else if(this.$store.state.userRole == 3){
-            let pModal              = this.$parent.$refs.pModal.$el;
-            this.$parent.title      = 'Authentication Error';
-            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
-            this.$router.push({name:'Home'});
-            $(pModal).modal('show');
         }else{
                 let pModal              = this.$parent.$refs.pModal.$el;
                 this.$parent.title      = 'Authentication Error';

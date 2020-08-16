@@ -153,6 +153,15 @@
 export default {
     async created(){
         if(this.$store.state.isLoggedIn){
+
+            if(this.$store.state.userRole == 3 && this.$store.state.userRole == 2){
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+                this.$router.push({name:'Home'});
+                $(pModal).modal('show');
+            }
+
             this.loading      = true;
             const id          = this.$route.params.id;
             try {

@@ -65,25 +65,27 @@ export default {
         if(this.$store.state.isLoggedIn){
             this.loading = true;
 
+            if(this.$store.state.userRole == 3){
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+                this.$router.push({name:'Home'});
+                $(pModal).modal('show');
+            }
+
             const response = (await axios.get(`/api/delivery/job/`+this.$store.state.userId));
             this.items = response.data.data;
             this.imageData = this.items[0].image;
 
 
             this.loading = false;
-       }else if(this.$store.state.userRole == 3){
-            let pModal              = this.$parent.$refs.pModal.$el;
-            this.$parent.title      = 'Authentication Error';
-            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
-            this.$router.push({name:'Home'});
-            $(pModal).modal('show');
-            }else{
+        }else{
                 let pModal              = this.$parent.$refs.pModal.$el;
                 this.$parent.title      = 'Authentication Error';
                 this.$parent.message    = 'Please login to continue';
                 this.$router.push({name:'Login'});
                 $(pModal).modal('show');
-            }
+        }
     }
 }
 </script>

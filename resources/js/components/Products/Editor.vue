@@ -323,13 +323,13 @@ import {fabric} from 'fabric';
         },
         created(){
             if(this.$store.state.isLoggedIn){
-
-            }else if(this.$store.state.userRole == 3){
-            let pModal              = this.$parent.$refs.pModal.$el;
-            this.$parent.title      = 'Authentication Error';
-            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
-            this.$router.push({name:'Home'});
-            $(pModal).modal('show');
+                if(this.$store.state.userRole == 3){
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+                this.$router.push({name:'Home'});
+                $(pModal).modal('show');
+                }
             }else{
                 let pModal              = this.$parent.$refs.pModal.$el;
                 this.$parent.title      = 'Authentication Error';

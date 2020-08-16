@@ -2201,29 +2201,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this2 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var response, pModal, _pModal;
+      var pModal, response, _pModal;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               if (!_this2.$store.state.isLoggedIn) {
-                _context2.next = 9;
+                _context2.next = 10;
                 break;
               }
 
               _this2.loading = true;
-              _context2.next = 4;
-              return axios.get("/api/user/notVerified");
 
-            case 4:
-              response = _context2.sent;
-              _this2.items = response.data;
-              _this2.loading = false;
-              _context2.next = 10;
-              break;
-
-            case 9:
               if (_this2.$store.state.userRole == 3) {
                 pModal = _this2.$parent.$refs.pModal.$el;
                 _this2.$parent.title = 'Authentication Error';
@@ -2234,19 +2224,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
                 $(pModal).modal('show');
-              } else {
-                _pModal = _this2.$parent.$refs.pModal.$el;
-                _this2.$parent.title = 'Authentication Error';
-                _this2.$parent.message = 'Please login to continue';
-
-                _this2.$router.push({
-                  name: 'Login'
-                });
-
-                $(_pModal).modal('show');
               }
 
+              _context2.next = 5;
+              return axios.get("/api/user/notVerified");
+
+            case 5:
+              response = _context2.sent;
+              _this2.items = response.data;
+              _this2.loading = false;
+              _context2.next = 15;
+              break;
+
             case 10:
+              _pModal = _this2.$parent.$refs.pModal.$el;
+              _this2.$parent.title = 'Authentication Error';
+              _this2.$parent.message = 'Please login to continue';
+
+              _this2.$router.push({
+                name: 'Login'
+              });
+
+              $(_pModal).modal('show');
+
+            case 15:
             case "end":
               return _context2.stop();
           }
@@ -3191,8 +3192,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this2 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var response, comments, pModal, _pModal;
-
+      var response, comments, pModal;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -3237,36 +3237,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log('error with fetch comments' + _context2.t1);
 
             case 23:
-              _context2.next = 26;
+              _context2.next = 30;
               break;
 
             case 25:
-              if (_this2.$store.state.userRole == 3) {
-                pModal = _this2.$parent.$refs.pModal.$el;
-                _this2.$parent.title = 'Authentication Error';
-                _this2.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
+              pModal = _this2.$parent.$refs.pModal.$el;
+              _this2.$parent.title = 'Authentication Error';
+              _this2.$parent.message = 'Please login to continue';
 
-                _this2.$router.push({
-                  name: 'Home'
-                });
+              _this2.$router.push({
+                name: 'Login'
+              });
 
-                $(pModal).modal('show');
-              } else {
-                _pModal = _this2.$parent.$refs.pModal.$el;
-                _this2.$parent.title = 'Authentication Error';
-                _this2.$parent.message = 'Please login to continue';
+              $(pModal).modal('show');
 
-                _this2.$router.push({
-                  name: 'Login'
-                });
-
-                $(_pModal).modal('show');
-              }
-
-            case 26:
+            case 30:
               _this2.loading = false;
 
-            case 27:
+            case 31:
             case "end":
               return _context2.stop();
           }
@@ -3914,17 +3902,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               if (_this.$store.state.isLoggedIn) {
+                if (_this.$store.state.userRole == 3) {
+                  pModal = _this.$parent.$refs.pModal.$el;
+                  _this.$parent.title = 'Authentication Error';
+                  _this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
+
+                  _this.$router.push({
+                    name: 'Home'
+                  });
+
+                  $(pModal).modal('show');
+                }
+
                 _this.getData();
-              } else if (_this.$store.state.userRole == 3) {
-                pModal = _this.$parent.$refs.pModal.$el;
-                _this.$parent.title = 'Authentication Error';
-                _this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
-
-                _this.$router.push({
-                  name: 'Home'
-                });
-
-                $(pModal).modal('show');
               } else {
                 _pModal = _this.$parent.$refs.pModal.$el;
                 _this.$parent.title = 'Authentication Error';
@@ -4424,14 +4414,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    if (this.$store.state.isLoggedIn) {} else if (this.$store.state.userRole == 3) {
-      var pModal = this.$parent.$refs.pModal.$el;
-      this.$parent.title = 'Authentication Error';
-      this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
-      this.$router.push({
-        name: 'Home'
-      });
-      $(pModal).modal('show');
+    if (this.$store.state.isLoggedIn) {
+      if (this.$store.state.userRole == 3) {
+        var pModal = this.$parent.$refs.pModal.$el;
+        this.$parent.title = 'Authentication Error';
+        this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
+        this.$router.push({
+          name: 'Home'
+        });
+        $(pModal).modal('show');
+      }
     } else {
       var _pModal = this.$parent.$refs.pModal.$el;
       this.$parent.title = 'Authentication Error';
@@ -4527,30 +4519,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var response, pModal, _pModal;
+      var pModal, response, _pModal;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               if (!_this.$store.state.isLoggedIn) {
-                _context.next = 10;
+                _context.next = 11;
                 break;
               }
 
               _this.loading = true;
-              _context.next = 4;
-              return axios.get("/api/delivery/job/" + _this.$store.state.userId);
 
-            case 4:
-              response = _context.sent;
-              _this.items = response.data.data;
-              _this.imageData = _this.items[0].image;
-              _this.loading = false;
-              _context.next = 11;
-              break;
-
-            case 10:
               if (_this.$store.state.userRole == 3) {
                 pModal = _this.$parent.$refs.pModal.$el;
                 _this.$parent.title = 'Authentication Error';
@@ -4561,19 +4542,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
                 $(pModal).modal('show');
-              } else {
-                _pModal = _this.$parent.$refs.pModal.$el;
-                _this.$parent.title = 'Authentication Error';
-                _this.$parent.message = 'Please login to continue';
-
-                _this.$router.push({
-                  name: 'Login'
-                });
-
-                $(_pModal).modal('show');
               }
 
+              _context.next = 5;
+              return axios.get("/api/delivery/job/" + _this.$store.state.userId);
+
+            case 5:
+              response = _context.sent;
+              _this.items = response.data.data;
+              _this.imageData = _this.items[0].image;
+              _this.loading = false;
+              _context.next = 16;
+              break;
+
             case 11:
+              _pModal = _this.$parent.$refs.pModal.$el;
+              _this.$parent.title = 'Authentication Error';
+              _this.$parent.message = 'Please login to continue';
+
+              _this.$router.push({
+                name: 'Login'
+              });
+
+              $(_pModal).modal('show');
+
+            case 16:
             case "end":
               return _context.stop();
           }
@@ -4722,17 +4715,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               if (_this.$store.state.isLoggedIn) {
+                if (_this.$store.state.userRole == 3) {
+                  pModal = _this.$parent.$refs.pModal.$el;
+                  _this.$parent.title = 'Authentication Error';
+                  _this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
+
+                  _this.$router.push({
+                    name: 'Home'
+                  });
+
+                  $(pModal).modal('show');
+                }
+
                 _this.getData();
-              } else if (_this.$store.state.userRole == 3) {
-                pModal = _this.$parent.$refs.pModal.$el;
-                _this.$parent.title = 'Authentication Error';
-                _this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
-
-                _this.$router.push({
-                  name: 'Home'
-                });
-
-                $(pModal).modal('show');
               } else {
                 _pModal = _this.$parent.$refs.pModal.$el;
                 _this.$parent.title = 'Authentication Error';
@@ -4997,17 +4992,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context.prev = _context.next) {
             case 0:
               if (_this.$store.state.isLoggedIn) {
+                if (_this.$store.state.userRole == 3) {
+                  pModal = _this.$parent.$refs.pModal.$el;
+                  _this.$parent.title = 'Authentication Error';
+                  _this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
+
+                  _this.$router.push({
+                    name: 'Home'
+                  });
+
+                  $(pModal).modal('show');
+                }
+
                 _this.getData();
-              } else if (_this.$store.state.userRole == 3) {
-                pModal = _this.$parent.$refs.pModal.$el;
-                _this.$parent.title = 'Authentication Error';
-                _this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
-
-                _this.$router.push({
-                  name: 'Home'
-                });
-
-                $(pModal).modal('show');
               } else {
                 _pModal = _this.$parent.$refs.pModal.$el;
                 _this.$parent.title = 'Authentication Error';
@@ -5295,50 +5292,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this2 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var pId, response, pModal, _pModal2, _pModal3;
+      var pId, pModal, response, _pModal2, _pModal3;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               if (!_this2.$store.state.isLoggedIn) {
-                _context2.next = 20;
+                _context2.next = 21;
                 break;
               }
 
               _this2.loading = true;
               pId = _this2.$route.params.id;
-              _context2.prev = 3;
-              _context2.next = 6;
-              return axios.get('/api/auction/check/' + pId);
 
-            case 6:
-              response = _context2.sent;
-              _this2.items = response.data;
-              _context2.next = 17;
-              break;
-
-            case 10:
-              _context2.prev = 10;
-              _context2.t0 = _context2["catch"](3);
-              pModal = _this2.$parent.$refs.pModal.$el;
-              _this2.$parent.title = 'Error';
-              _this2.$parent.message = 'Something went wrong';
-
-              _this2.$router.push({
-                name: 'Offer'
-              });
-
-              $(pModal).modal('show');
-
-            case 17:
-              _this2.loading = false;
-              _context2.next = 21;
-              break;
-
-            case 20:
               if (_this2.$store.state.userRole == 3) {
-                _pModal2 = _this2.$parent.$refs.pModal.$el;
+                pModal = _this2.$parent.$refs.pModal.$el;
                 _this2.$parent.title = 'Authentication Error';
                 _this2.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
 
@@ -5346,25 +5315,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: 'Home'
                 });
 
-                $(_pModal2).modal('show');
-              } else {
-                _pModal3 = _this2.$parent.$refs.pModal.$el;
-                _this2.$parent.title = 'Authentication Error';
-                _this2.$parent.message = 'Please login to continue';
-
-                _this2.$router.push({
-                  name: 'Login'
-                });
-
-                $(_pModal3).modal('show');
+                $(pModal).modal('show');
               }
 
+              _context2.prev = 4;
+              _context2.next = 7;
+              return axios.get('/api/auction/check/' + pId);
+
+            case 7:
+              response = _context2.sent;
+              _this2.items = response.data;
+              _context2.next = 18;
+              break;
+
+            case 11:
+              _context2.prev = 11;
+              _context2.t0 = _context2["catch"](4);
+              _pModal2 = _this2.$parent.$refs.pModal.$el;
+              _this2.$parent.title = 'Error';
+              _this2.$parent.message = 'Something went wrong';
+
+              _this2.$router.push({
+                name: 'Offer'
+              });
+
+              $(_pModal2).modal('show');
+
+            case 18:
+              _this2.loading = false;
+              _context2.next = 26;
+              break;
+
             case 21:
+              _pModal3 = _this2.$parent.$refs.pModal.$el;
+              _this2.$parent.title = 'Authentication Error';
+              _this2.$parent.message = 'Please login to continue';
+
+              _this2.$router.push({
+                name: 'Login'
+              });
+
+              $(_pModal3).modal('show');
+
+            case 26:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[3, 10]]);
+      }, _callee2, null, [[4, 11]]);
     }))();
   }
 });
@@ -5544,91 +5542,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var id, result, uId, userResult, deliverable, comments, pModal, _pModal;
+      var pModal, id, result, uId, userResult, deliverable, comments, _pModal, _pModal2;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               if (!_this.$store.state.isLoggedIn) {
-                _context.next = 48;
+                _context.next = 49;
                 break;
               }
 
-              _this.loading = true;
-              id = _this.$route.params.id;
-              _context.prev = 3;
-              _context.next = 6;
-              return axios.get("/api/products/view/" + id);
-
-            case 6:
-              result = _context.sent;
-              _this.items = result.data;
-              _this.image = result.data.imageFront;
-              _context.next = 14;
-              break;
-
-            case 11:
-              _context.prev = 11;
-              _context.t0 = _context["catch"](3);
-              console.log('fail to fetch product' + _context.t0);
-
-            case 14:
-              _context.prev = 14;
-              uId = _this.items.user_id;
-              _context.next = 18;
-              return axios.get("/api/user/view/" + uId);
-
-            case 18:
-              userResult = _context.sent;
-              _this.userInfo = userResult.data;
-              _context.next = 25;
-              break;
-
-            case 22:
-              _context.prev = 22;
-              _context.t1 = _context["catch"](14);
-              console.log('fail to fetch user' + _context.t1);
-
-            case 25:
-              _context.prev = 25;
-              _context.next = 28;
-              return axios.get("/api/delivery/check/" + id);
-
-            case 28:
-              deliverable = _context.sent;
-              _this.deliverable = deliverable.data;
-              _context.next = 35;
-              break;
-
-            case 32:
-              _context.prev = 32;
-              _context.t2 = _context["catch"](25);
-              console.log('fail to fetch deliverable' + _context.t2);
-
-            case 35:
-              _context.prev = 35;
-              _context.next = 38;
-              return axios.get("/api/rate/check/" + _this.items.id + "/" + _this.items.user_id);
-
-            case 38:
-              comments = _context.sent;
-              _this.comments = comments.data;
-              _context.next = 45;
-              break;
-
-            case 42:
-              _context.prev = 42;
-              _context.t3 = _context["catch"](35);
-              console.log('fail to fetch comments' + _context.t3);
-
-            case 45:
-              _this.loading = false;
-              _context.next = 49;
-              break;
-
-            case 48:
-              if (_this.$store.state.userRole == 3) {
+              if (_this.$store.state.userRole == 3 && _this.$store.state.userRole == 2) {
                 pModal = _this.$parent.$refs.pModal.$el;
                 _this.$parent.title = 'Authentication Error';
                 _this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
@@ -5638,8 +5563,93 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 });
 
                 $(pModal).modal('show');
-              } else {
+              }
+
+              _this.loading = true;
+              id = _this.$route.params.id;
+              _context.prev = 4;
+              _context.next = 7;
+              return axios.get("/api/products/view/" + id);
+
+            case 7:
+              result = _context.sent;
+              _this.items = result.data;
+              _this.image = result.data.imageFront;
+              _context.next = 15;
+              break;
+
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](4);
+              console.log('fail to fetch product' + _context.t0);
+
+            case 15:
+              _context.prev = 15;
+              uId = _this.items.user_id;
+              _context.next = 19;
+              return axios.get("/api/user/view/" + uId);
+
+            case 19:
+              userResult = _context.sent;
+              _this.userInfo = userResult.data;
+              _context.next = 26;
+              break;
+
+            case 23:
+              _context.prev = 23;
+              _context.t1 = _context["catch"](15);
+              console.log('fail to fetch user' + _context.t1);
+
+            case 26:
+              _context.prev = 26;
+              _context.next = 29;
+              return axios.get("/api/delivery/check/" + id);
+
+            case 29:
+              deliverable = _context.sent;
+              _this.deliverable = deliverable.data;
+              _context.next = 36;
+              break;
+
+            case 33:
+              _context.prev = 33;
+              _context.t2 = _context["catch"](26);
+              console.log('fail to fetch deliverable' + _context.t2);
+
+            case 36:
+              _context.prev = 36;
+              _context.next = 39;
+              return axios.get("/api/rate/check/" + _this.items.id + "/" + _this.items.user_id);
+
+            case 39:
+              comments = _context.sent;
+              _this.comments = comments.data;
+              _context.next = 46;
+              break;
+
+            case 43:
+              _context.prev = 43;
+              _context.t3 = _context["catch"](36);
+              console.log('fail to fetch comments' + _context.t3);
+
+            case 46:
+              _this.loading = false;
+              _context.next = 50;
+              break;
+
+            case 49:
+              if (_this.$store.state.userRole == 3) {
                 _pModal = _this.$parent.$refs.pModal.$el;
+                _this.$parent.title = 'Authentication Error';
+                _this.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
+
+                _this.$router.push({
+                  name: 'Home'
+                });
+
+                $(_pModal).modal('show');
+              } else {
+                _pModal2 = _this.$parent.$refs.pModal.$el;
                 _this.$parent.title = 'Authentication Error';
                 _this.$parent.message = 'Please login to continue';
 
@@ -5647,15 +5657,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   name: 'Login'
                 });
 
-                $(_pModal).modal('show');
+                $(_pModal2).modal('show');
               }
 
-            case 49:
+            case 50:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[3, 11], [14, 22], [25, 32], [35, 42]]);
+      }, _callee, null, [[4, 12], [15, 23], [26, 33], [36, 43]]);
     }))();
   },
   mounted: function mounted() {},

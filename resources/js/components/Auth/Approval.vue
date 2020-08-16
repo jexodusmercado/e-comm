@@ -84,17 +84,18 @@ export default {
         if(this.$store.state.isLoggedIn){
             this.loading = true;
 
+            if(this.$store.state.userRole == 3){
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+                this.$router.push({name:'Home'});
+                $(pModal).modal('show');
+            }
+
             const response = (await axios.get(`/api/user/notVerified`));
             this.items = response.data;
 
             this.loading = false;
-        }else if(this.$store.state.userRole == 3){
-            let pModal              = this.$parent.$refs.pModal.$el;
-            this.$parent.title      = 'Authentication Error';
-            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
-            this.$router.push({name:'Home'});
-            $(pModal).modal('show');
-
         }else{
             let pModal              = this.$parent.$refs.pModal.$el;
             this.$parent.title      = 'Authentication Error';

@@ -94,6 +94,10 @@ export default {
         this.loading = true;
 
         if(this.$store.state.isLoggedIn){
+
+            
+
+
             try {
                 const response = (await axios.get(`/api/user/view/`+this.$store.state.userId));
                 this.items = response.data;
@@ -109,13 +113,6 @@ export default {
             } catch (error) {
                 console.log('error with fetch comments' + error);
             }
-
-        }else if(this.$store.state.userRole == 3){
-            let pModal              = this.$parent.$refs.pModal.$el;
-            this.$parent.title      = 'Authentication Error';
-            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
-            this.$router.push({name:'Home'});
-            $(pModal).modal('show');
 
         }else{
             let pModal              = this.$parent.$refs.pModal.$el;
