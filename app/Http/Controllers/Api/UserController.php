@@ -76,6 +76,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $name = '';
+        if($request->photo){
+            //dd($request->photo);
+            $file = $request->photo;
+            $name = uniqid() . '_' . time(). '.' . $file->getClientOriginalExtension();
+            $path = public_path() . '/profiles';
+            $res = $file->move($path, $name);
+            //dd($name);
+        }
 
         $result = User::findOrFail($id)
                         ->update([
@@ -89,7 +98,8 @@ class UserController extends Controller
                             'province'      => $request->province,
                             'mobile_number' => $request->mobile_number,
                             'email'         => $request->email,
-                            'password'      => Hash::make($request->password)
+                            'profile_img'   => $name,
+                            // 'password'      => Hash::make($request->password)
                         ]);
 
 
@@ -98,6 +108,19 @@ class UserController extends Controller
         }else{
             return response()->json([], 422);
         }
+    }
+
+    public function updateRole(Request $request, $id)
+    {
+        $result = User::findOrFail($id)
+                        ->update([ 'role' => 2]);
+
+        if($result){
+            return response()->json([], 200);
+        }else{
+            return response()->json([], 422);
+        }
+
     }
 
     /**

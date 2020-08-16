@@ -29,11 +29,15 @@ class Product extends Model
     }
 
     public function deliverable(){
-        return $this->hasOne(Deliverable::class);
+        return $this->hasOne(Deliverable::class, 'product_id', 'id');
     }
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function Rating(){
+        return $this->hasMany(Rating::class);
     }
 
 }

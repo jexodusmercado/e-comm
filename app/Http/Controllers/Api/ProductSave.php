@@ -22,13 +22,13 @@ class ProductSave extends Controller
                 $validateData = $request->validate([
                     'selectedProduct'=>'required',
                     'userId'=>'required',
-                    'XXS'=>'required|integer|min:1',
-                    'XSM'=>'required|integer|min:1',
-                    'SML'=>'required|integer|min:1',
-                    'MED'=>'required|integer|min:1',
-                    'LRG'=>'required|integer|min:1',
-                    'XLG'=>'required|integer|min:1',
-                    'XXL'=>'required|integer|min:1',
+                    'XXS'=>'required',
+                    'XSM'=>'required',
+                    'SML'=>'required',
+                    'MED'=>'required',
+                    'LRG'=>'required',
+                    'XLG'=>'required',
+                    'XXL'=>'required',
                     'totalQty' => 'required|integer|min:1'
                 ]);
 
@@ -74,12 +74,12 @@ class ProductSave extends Controller
                 $product->save();
 
 			    if($product->save()){
-			    	return response()->json(['status' => 'success'], 200);
+			    	return response()->json([], 200);
 			    }else{
-			    	return response()->json(['status' => 'Failed'], 404);
+			    	return response()->json([], 404);
 			    }
 		    } else {
-                return response()->json(['status' => 'No image'], 400);
+                return response()->json([], 404);
             }
 
 

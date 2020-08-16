@@ -18,14 +18,13 @@ class ProductController extends Controller
     public function index(Request $request, $id)
     {
         $category   = $request->query('category');
-        $active     = $request->query('active');
         if($category){
             return ProductIndexResource::collection(
                 Product::where('user_id', $id)
                 ->where('deleted_at', null)
                 ->whereIn('selectedProduct', $category)
-                ->whereHas('market', function ($query) use ($active){
-                    return $query->whereIn('active', $active);
+                ->whereHas('market', function ($query){
+                    return $query->where('active', 1);
                 })
                 ->with('market')
                 ->paginate(8)

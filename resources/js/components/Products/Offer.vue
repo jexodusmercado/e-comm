@@ -9,11 +9,16 @@
                     </div>
                 </div>
                 <div class="row border mt-2" v-for="(item, index) in items" :key="index">
-                    <div class="col-md-4">
+                    <!-- <div class="col-md-3">
                         <img src="/assets/images/image-placeholder.jpg" class="img-fluid">
-                    </div>
-                    <div class="col-md-4 ">
+                        <star-rating :read-only="true" :rating="item.user.ratings" :show-rating="false"> </star-rating>
+                    </div> -->
+
+                    <div class="col-md-12">
                         <dl class="row p-2">
+                            <dt class="col-md-12 my-3">
+                            <star-rating :read-only="true" :rating="item.user.ratings" :show-rating="false"> </star-rating>
+                            </dt>
                             <dt class="col-md-4">Name:</dt>
                             <dd class="col-md-8">{{ item.user.last_name }}, {{ item.user.first_name }} </dd>
 
@@ -98,7 +103,8 @@ export default {
             this.loading = false;
 
             }
-        }
+        },
+
     },
     async created(){
         if(this.$store.state.isLoggedIn){
@@ -117,12 +123,18 @@ export default {
             }
 
             this.loading = false;
-        }else{
-            let pModal = this.$parent.$refs.pModal.$el;
-            this.$parent.title = 'Authentication Error';
-            this.$parent.message = 'Please login to continue';
-            this.$router.push({name:'Login'});
+        }else if(this.$store.state.userRole == 3){
+            let pModal              = this.$parent.$refs.pModal.$el;
+            this.$parent.title      = 'Authentication Error';
+            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+            this.$router.push({name:'Home'});
             $(pModal).modal('show');
+        }else{
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'Please login to continue';
+                this.$router.push({name:'Login'});
+                $(pModal).modal('show');
         }
     }
 }

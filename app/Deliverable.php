@@ -26,4 +26,9 @@ class Deliverable extends Model
         return $this->hasOne(Auction::class, 'product_id', 'product_id');
     }
 
+    public function rating(){
+        return $this->hasMany(Rating::class, 'product_id', 'product_id');
+    }
+
+
 }

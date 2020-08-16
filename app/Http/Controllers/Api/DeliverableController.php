@@ -29,6 +29,21 @@ class DeliverableController extends Controller
         );
     }
 
+    public function sellerIndex($id)
+    {
+        return DeliverableIndexResource::collection(
+
+               Deliverable::where('seller_id',$id)
+                          ->whereHas('product', function ($query){
+                              return $query->where('deleted_at', null);
+                          })
+                          ->orderBy('created_at', 'asc')
+                          ->paginate(8)
+
+        );
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *

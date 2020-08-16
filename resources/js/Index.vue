@@ -10,6 +10,8 @@
                 <div class="ml-auto" v-if="isLoggedIn">
                     <router-link :to="{name: 'Profile'}" class="btn btn-sm text-white"> My Account </router-link>
                     <span> | </span>
+                    <router-link :to="{name: 'Settings'}" class="btn btn-sm text-white"> Settings </router-link>
+                    <span> | </span>
                     <a class="btn btn-sm text-white" @click.prevent="accLogout"> Logout </a>
                 </div>
                 <div class="ml-auto" v-if="!isLoggedIn">

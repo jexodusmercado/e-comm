@@ -33,7 +33,8 @@ class ProductIndexResource extends JsonResource
             'LRG'           => $this->LRG,
             'total'         => $this->totalQty,
             'created'       => $this->created_at,
-            'market'        => $market
+            'market'        => $market,
+            'deliverable'   => $deliverable,
 
         ];
     }

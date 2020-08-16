@@ -9,6 +9,7 @@ import Delivery from './components/Products/AcceptedDesign.vue';
 import Jobs from './components/Products/Job.vue';
 import Profile from './components/Auth/Profile.vue';
 import Approval from './components/Auth/Approval.vue';
+import Settings from './components/Auth/Settings.vue';
 
 
 const routes = [
@@ -56,6 +57,11 @@ const routes = [
         path: "/jobs",
         component: Jobs,
         name: "Jobs"
+    },
+    {
+        path: "/auth/settings",
+        component: Settings,
+        name: "Settings"
     },
     {
         path: "/auth/register/customer",

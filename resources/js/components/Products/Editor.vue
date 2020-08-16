@@ -44,20 +44,20 @@
                 </div>
             </div>
             <div class="col-md-6 p-3 border bg-light">
-				<div id="tshirt_front" class="tshirt-div" :class="[this.hide_front ? active : inactive]">
+				<div ref="tshirt_front" id="tshirt_front" class="tshirt-div" :class="[this.hide_front ? active : inactive]">
 				    <img id="tshirt_backgroundpicture" :src="'/product/'+selectedProduct+'_front.png'">
 				    <div id="drawingArea_1" class="drawing-area">
 				        <div class="canvas-container">
-				            <canvas id="canvas_1" class="canvas" width="200" height="400"></canvas>
+				            <canvas ref="canvas_1" id="canvas_1" class="canvas" width="200" height="400"></canvas>
 				        </div>
 				    </div>
 				</div>
 
-                <div id="tshirt_back" class="tshirt-div" :class="[this.hide_back ? active : inactive]">
+                <div ref="tshirt_back" id="tshirt_back" class="tshirt-div" :class="[this.hide_back ? active : inactive]">
 				    <img id="tshirt_backgroundpicture" :src="'/product/'+selectedProduct+'_back.png'">
 				    <div id="drawingArea_2" class="drawing-area">
 				        <div class="canvas-container">
-				            <canvas id="canvas_2" class="canvas" width="200" height="400"></canvas>
+				            <canvas ref="canvas_2" id="canvas_2" class="canvas" width="200" height="400"></canvas>
 				        </div>
 				    </div>
 				</div>
@@ -192,17 +192,15 @@ import {fabric} from 'fabric';
                 this.hide_back=true;
                 this.hide_front=true;
 
-                let file1 = this.$refs.file1.value;
-                let file2 = this.$refs.file1.value;
+                let file1 = this.$refs.file1;
+                let file2 = this.$refs.file2;
 
-                let imageFront = document.getElementById('tshirt_front');
-                let imageBack = document.getElementById('tshirt_back');
+                let imageFront = this.$refs.tshirt_front;
+                let imageBack = this.$refs.tshirt_back;
                 let data1 = await this.getImageUrl(imageFront);
                 let data2 = await this.getImageUrl(imageBack);
 
                 const formData = new FormData();
-
-
                 formData.append("imageFront", data1);
                 formData.append("imageBack", data2);
                 formData.append("selectedProduct", this.selectedProduct);
@@ -217,31 +215,34 @@ import {fabric} from 'fabric';
                 formData.append("totalQty", this.totalQty);
 
 
-                if(file1 === "" || file2 === ""){
+                if(file1.length == 0 || file2.length == 0){
                     this.error_data.title = "ERROR";
                     this.error_data.message ="NO GRAPHIC INSERTED";
                     this.loading = false;
                     let errModal = this.$refs.errModal.$el;
                     $(errModal).modal('show');
                 }else{
-                    axios.post(`api/products/save`, formData)
-                    .then(response =>{
-                        this.error_data.title = "SUCCESS";
-                        this.error_data.message = "Design has been saved!"
-                        let errModal = this.$refs.errModal.$el;
-                        this.loading = false;
-                        $(errModal).modal('show');
-
-                    })
-                    .catch(err =>{
+                    if(this.totalQty == 0){
                         this.error_data.title = "ERROR";
                         this.error_data.message ="NO QUANTITY ENTERED";
                         let errModal = this.$refs.errModal.$el;
                         this.loading = false;
                         $(errModal).modal('show');
-                        console.log("something is wrong",err)
-                    })
+                    }else{
+                        try {
+                            const response = await (axios.post(`/api/products/save`, formData));
+                            this.error_data.title = "SUCCESS";
+                            this.error_data.message = "Design has been saved!"
+                            let errModal = this.$refs.errModal.$el;
+                            this.loading = false;
+                            $(errModal).modal('show');
+                        } catch (error) {
+
+                        }
+                    }
+
                 }
+
                 this.hide_back=false;
 
             },
@@ -273,13 +274,11 @@ import {fabric} from 'fabric';
             },
             uploadPhotoFront(event){
                 let file = event.target.files[0];
-                let canvas_1 = new fabric.Canvas('canvas_1');
+                let data1 = this.$refs.canvas_1;
+                let canvas_1 = new fabric.Canvas(data1);
                 let hideFront = this.hide_front;
-                const fileValue = document.getElementById('asset_image');
-
 
                  let reader = new FileReader();
-
 
     			     reader.onload = function (event){
     			        let imgObj = new Image();
@@ -298,9 +297,9 @@ import {fabric} from 'fabric';
                     this.asset_image_1 = true;
             },
             uploadPhotoBack(event){
-    	  		let canvas_2 = new fabric.Canvas('canvas_2');
                 let file = event.target.files[0];
-                const fileValue = document.getElementById('asset_image');
+                let data2 = this.$refs.canvas_2;
+    	  		let canvas_2 = new fabric.Canvas(data2);
 
                  let reader = new FileReader();
 
@@ -320,6 +319,23 @@ import {fabric} from 'fabric';
     			    };
     			    reader.readAsDataURL(file);
                     this.asset_image_2 = true;
+            }
+        },
+        created(){
+            if(this.$store.state.isLoggedIn){
+
+            }else if(this.$store.state.userRole == 3){
+            let pModal              = this.$parent.$refs.pModal.$el;
+            this.$parent.title      = 'Authentication Error';
+            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+            this.$router.push({name:'Home'});
+            $(pModal).modal('show');
+            }else{
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'Please login to continue';
+                this.$router.push({name:'Login'});
+                $(pModal).modal('show');
             }
         }
 

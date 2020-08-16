@@ -83,6 +83,12 @@ export default {
                 }
             this.loading = false;
         }
+    },
+    created(){
+        if(this.$store.state.isLoggedIn){
+            this.$router.push({name:'Home'});
+
+        }
     }
 }
 </script>

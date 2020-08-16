@@ -30,7 +30,7 @@
                           <span v-if="item.delivery_status == 2">Ship</span>
                           <span v-if="item.delivery_status == 3">Delivered</span>
                       </td>
-                      <td class="align-middle">{{ item.total_amount}}</td>
+                      <td class="align-middle">₱{{ Number(item.total_amount).toLocaleString() }}</td>
                       <td class="align-middle"> CASH ON DELIVERY</td>
                       <td class="align-middle"><router-link :to="{name:'View Design', params: { id: item.product_id} }" class="btn btn-primary btn-sm mr-2">VIEW</router-link></td>
                     </tr>
@@ -65,21 +65,25 @@ export default {
         if(this.$store.state.isLoggedIn){
             this.loading = true;
 
-            const response = (await axios.get(`/api/delivery/user/`+this.$store.state.userId));
-
+            const response = (await axios.get(`/api/delivery/job/`+this.$store.state.userId));
             this.items = response.data.data;
             this.imageData = this.items[0].image;
 
 
             this.loading = false;
-        }else{
+       }else if(this.$store.state.userRole == 3){
             let pModal              = this.$parent.$refs.pModal.$el;
             this.$parent.title      = 'Authentication Error';
-            this.$parent.message    = 'Please login to continue';
-
-            this.$router.push({name:'Login'});
+            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+            this.$router.push({name:'Home'});
             $(pModal).modal('show');
-        }
+            }else{
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'Please login to continue';
+                this.$router.push({name:'Login'});
+                $(pModal).modal('show');
+            }
     }
 }
 </script>

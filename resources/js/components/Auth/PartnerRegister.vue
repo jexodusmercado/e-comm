@@ -83,7 +83,12 @@
                                 <small id="mobileHelp" class="form-text text-muted">We'll never share your ID with anyone else.</small>
                             </div>
                             <div class="form-group col-md-12">
-                                <button type="button" class="btn btn-block btn-primary" @click.prevent="accReg">
+                                <vue-recaptcha
+                                @verify="onVerify"
+                                :sitekey="'6LfZAbwZAAAAAHYjtfX765qSCx-52XI_2hxamm_S'"
+                                :loadRecaptchaScript="true">
+                                </vue-recaptcha>
+                                <button type="button" class="btn btn-block btn-primary mt-2" @click.prevent="accReg">
                                      Submit
                                 </button>
                             </div>
@@ -102,7 +107,6 @@
 import { logIn } from "../../shared/utils/auth";
 
 export default {
-
     beforeMount(){
         if(this.$store.state.isLoggedIn){
             this.$router.push({name:"Home"});
@@ -127,6 +131,7 @@ export default {
             passwd: null,
             cpasswd: null,
             loading: false,
+            verified: false,
             errors: []
         }
     },
@@ -135,36 +140,62 @@ export default {
             this.loading = true;
             const formData = new FormData();
             if(this.passwd == this.cpasswd){
-                formData.append('role', 3);
-                formData.append('photo', this.photo);
-                formData.append('fname', this.fname);
-                formData.append('mname', this.mname);
-                formData.append('lname', this.lname);
-                formData.append('add1', this.add1);
-                formData.append('add2', this.add2);
-                formData.append('barangay', this.barangay);
-                formData.append('city', this.city);
-                formData.append('prov', this.prov);
-                formData.append('mobile', this.mobile);
-                formData.append('email', this.email);
-                formData.append('passwd', this.passwd);
+                if(this.verified == true){
+                    formData.append('role', 3);
+                    formData.append('photo', this.photo);
+                    formData.append('fname', this.fname);
+                    formData.append('mname', this.mname);
+                    formData.append('lname', this.lname);
+                    formData.append('add1', this.add1);
+                    formData.append('add2', this.add2);
+                    formData.append('barangay', this.barangay);
+                    formData.append('city', this.city);
+                    formData.append('prov', this.prov);
+                    formData.append('mobile', this.mobile);
+                    formData.append('email', this.email);
+                    formData.append('passwd', this.passwd);
 
-                    try {
-                        const response = await axios.post('/register', formData);
-                        if(201 === response.status){
-                            logIn();
-                            this.$store.dispatch("loadUser");
-                            this.$router.push({name:"Home"});
+                        try {
+                            const response = await axios.post('/register', formData);
+                            if(201 === response.status){
+                                logIn();
+                                this.$store.dispatch("loadUser");
+                                this.$router.push({name:"Home"});
+                            }
+
+                        } catch (error) {
+                            let pModal = this.$parent.$refs.pModal.$el;
+                            this.$parent.title = 'Error';
+                            this.$parent.message = 'Please complete all required fields';
+                            $(pModal).modal('show');
                         }
+                }else{
+                    let pModal = this.$parent.$refs.pModal.$el;
+                    this.$parent.title = 'Error';
+                    this.$parent.message = 'Please complete captcha';
+                    $(pModal).modal('show');
+                }
 
-                    } catch (error) {
-                    }
+            }else{
+                let pModal = this.$parent.$refs.pModal.$el;
+                this.$parent.title = 'Error';
+                this.$parent.message = 'Password does not match';
+                $(pModal).modal('show');
             }
 
             this.loading = false;
         },
         onImageChange(e){
             this.photo = e.target.files[0];
+        },
+         onVerify(response){
+            if(response) this.verified = true;
+        }
+    },
+    created(){
+        if(this.$store.state.isLoggedIn){
+            this.$router.push({name:'Home'});
+
         }
     }
 }

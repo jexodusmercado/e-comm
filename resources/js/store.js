@@ -24,7 +24,7 @@ export default {
 
     },
     actions:{
-        loadStoredState(context){
+        async loadStoredState(context){
 
             context.commit("setLoggedIn", isLoggedIn());
             context.commit("setUserId", isUserId());

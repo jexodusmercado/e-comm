@@ -37,7 +37,7 @@
                       <td class="align-middle">{{ item.province }}</td>
                       <td class="align-middle">{{ item.email }}</td>
                       <td class="align-middle"><button class="btn btn-sm btn-primary" @click.prevent="openModal(item.verification_id_img)">View</button></td>
-                      <td class="align-middle"><button class="btn btn-sm btn-success">Approved</button></td>
+                      <td class="align-middle"><button class="btn btn-sm btn-success" @click.prevent="approveThis(item.id)">Approved</button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -67,6 +67,17 @@ export default {
             $(iModal).modal('show');
 
             this.loading = false;
+        },
+        async approveThis(id){
+            this.loading = true;
+
+            const response = (await axios.get(`/api/user/verify/`+id));
+            let pModal              = this.$parent.$refs.pModal.$el;
+            this.$parent.title      = 'Success';
+            this.$parent.message    = 'Update has been a success';
+            $(pModal).modal('show');
+
+            this.loading = false;
         }
     },
     async created(){
@@ -77,6 +88,13 @@ export default {
             this.items = response.data;
 
             this.loading = false;
+        }else if(this.$store.state.userRole == 3){
+            let pModal              = this.$parent.$refs.pModal.$el;
+            this.$parent.title      = 'Authentication Error';
+            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+            this.$router.push({name:'Home'});
+            $(pModal).modal('show');
+
         }else{
             let pModal              = this.$parent.$refs.pModal.$el;
             this.$parent.title      = 'Authentication Error';
@@ -85,6 +103,8 @@ export default {
             this.$router.push({name:'Login'});
             $(pModal).modal('show');
         }
+
+
     }
 }
 </script>

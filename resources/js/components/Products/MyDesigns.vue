@@ -49,7 +49,7 @@
                             </div>
                           </div>
 
-                            <div class="row pt-2">
+                            <!-- <div class="row pt-2">
                                 <div class="col-md-2 form-check form-check-inline">
                                   <input type="checkbox" class="form-check-input" name="active" id="active" value="1" v-model="active" @change="getData()">
                                   <label for="active" class="form-check-label">
@@ -62,7 +62,7 @@
                                       INACTIVE
                                   </label>
                                 </div>
-                            </div>
+                            </div> -->
 
                       </div>
                     </div>
@@ -71,7 +71,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-show="items.length">
             <div class="col-md-3 pt-2" v-for="(item, index) in items" :key="index">
                 <div class="card">
                   <img class="card-img-top img-fluid" :src="thisURL+'/uploads/'+item.front+'.png'" alt="">
@@ -88,14 +88,22 @@
             </div>
         </div>
 
+        <div class="row my-5" v-if="items.length <= 0">
+            <div class="col-md-12">
+                <h1 class="display-4 text-center d-block" >
+                    NO DATA YET
+                </h1>
+            </div>
+        </div>
+
         <div class="row pt-4 pb-2">
             <div class="product-bar">
                 <div class="col">
                     <div class="btn-group" role="group">
-                        <button class="btn btn-secondary" @click.prevent="getData(links['first']+'&'+check)">First</button>
+                        <button class="btn btn-secondary" @click.prevent="getData(links['first']+'&'+check)" :disabled="links['prev']==null">First</button>
                         <button class="btn btn-secondary" @click.prevent="getData(links['prev']+'&'+check)" :disabled="links['prev']==null">Previous</button>
                         <button class="btn btn-secondary" @click.prevent="getData(links['next']+'&'+check)" :disabled="links['next']==null">Next</button>
-                        <button class="btn btn-secondary" @click.prevent="getData(links['last']+'&'+check)">Last</button>
+                        <button class="btn btn-secondary" @click.prevent="getData(links['last']+'&'+check)" :disabled="links['next']==null">Last</button>
                     </div>
                 </div>
 
@@ -112,7 +120,6 @@ export default {
 
         check(){
             let i ='';
-            let x = '';
             var query ='';
 
             for(i=0; i < this.categories.length;i++){
@@ -122,11 +129,6 @@ export default {
                 }
                 query += '&category[]='+this.categories[i];
             }
-
-            for(x=0; x < this.active.length; x++){
-                query += '&active[]='+this.active[x];
-            }
-
             return query;
         }
     },
@@ -156,12 +158,18 @@ export default {
     async created(){
         if(this.$store.state.isLoggedIn){
             this.getData();
-        }else{
-            let pModal = this.$parent.$refs.pModal.$el;
-            this.$parent.title = 'Authentication Error';
-            this.$parent.message = 'Please login to continue';
-            this.$router.push({name:'Login'});
+        }else if(this.$store.state.userRole == 3){
+            let pModal              = this.$parent.$refs.pModal.$el;
+            this.$parent.title      = 'Authentication Error';
+            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+            this.$router.push({name:'Home'});
             $(pModal).modal('show');
+        }else{
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'Please login to continue';
+                this.$router.push({name:'Login'});
+                $(pModal).modal('show');
         }
 
     },

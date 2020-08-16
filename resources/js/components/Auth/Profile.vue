@@ -1,158 +1,132 @@
 <template>
     <div>
-        <Loader :show="loading"></Loader>
+        <Loader :show="loading"> </Loader>
         <div class="container">
-            <div class="row">
-                <div class="col-md-12 mx-auto p-5">
-                            <div class="form-group col-md-12" v-show="$store.state.userRole == 2">
-                                <label for="fname">First name:</label>
-                                <input type="text" class="form-control" id="fname" v-model="fname">
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="fname">First name:</label>
-                                <input type="text" class="form-control" id="fname" v-model="fname">
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="mname">Middle name:</label>
-                                <input type="text" class="form-control" id="mname" v-model="mname">
-                                <small id="mnameHelp" class="form-text text-muted">Optional</small>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="lname">Last name:</label>
-                                <input type="text" class="form-control" id="lname" v-model="lname">
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="add1">Address 1:</label>
-                                <input type="text" class="form-control" id="add1" v-model="add1">
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="add2">Address 2:</label>
-                                <input type="text" class="form-control" id="add2" v-model="add2">
-                                <small id="add2Help" class="form-text text-muted">Optional</small>
+            <button @click="$router.go(-1)" class="btn btn-secondary btn-sm mt-3"> BACK </button>
+            <div class="row mt-5">
+                <!-- <div class="col-md-3">
+                    <img :src="'http://localhost/profiles/no_profile.jpg'" class="img-fluid" />
+                    <h3 class="text-center mt-3"> {{ items.first_name }} {{ items.last_name }}</h3>
+                    <star-rating :read-only="true" v-model="items.ratings" :show-rating="false"> </star-rating>
+                </div> -->
+                <div class="col-md-12">
+                    <div class="row">
+                        <h3 class="mt-3 mr-3"> {{ items.first_name }} {{ items.last_name }}</h3>
+                        <star-rating :read-only="true" v-model="items.ratings" :show-rating="false"> </star-rating>
+                        <div class="col-md-12 bg-secondary text-white">
+                             INFORMATION
+                        </div>
+                        <div class="col-md-12">
+                        <dl class="row">
+                                <dt class="col-md-4">User ID:</dt>
+                                <dd class="col-md-8">{{ items.id }}</dd>
 
+                                <dt class="col-md-4">Role:</dt>
+                                <dd class="col-md-8" v-if="items.role==0">Admin</dd>
+                                <dd class="col-md-8" v-if="items.role==1">Buyer</dd>
+                                <dd class="col-md-8" v-if="items.role==2">Seller</dd>
+
+                                <dt class="col-md-4">Address:</dt>
+                                <dd class="col-md-8">{{  items.address1 }} {{ items.address2 }}, {{items.barangay}}, {{items.city}}, {{items.province}}</dd>
+
+                                <dt class="col-md-4">Mobile number:</dt>
+                                <dd class="col-md-8">{{ items.mobile_number }} </dd>
+
+                                <dt class="col-md-4">Email Address:</dt>
+                                <dd class="col-md-8"> {{ items.email }} </dd>
+
+                            </dl>
+                        </div>
+
+                        <div class="col-md-12 bg-secondary text-white" v-if="this.$store.state.userRole == 2">
+                             RATING
+                        </div>
+                        <div class="col-md-12 mt-3" v-for="(comment, index) in comments.data" :key="index" >
+                            <dl class="row" v-if="this.$store.state.userRole == 2">
+                                <div class="col-md-3">
+                                    <img :src="'http://localhost/uploads/'+comment.product.imageFront+'.png'" class='img-fluid'>
+                                    <star-rating :read-only="true" :rating="Number(comment.rating)" :star-size="25" :show-rating="false"> </star-rating>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="font-italic">{{ comment.buyer.first_name  }} {{ comment.buyer.last_name}}</p>
+                                    <p class="font-weight-light"> {{ comment.comment }}</p>
+                                </div>
+
+                            </dl>
+                        </div>
+                        <div class="col-md-9 text-center my-2" v-if="this.$store.state.userRole == 2">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <button type="button" class="btn btn-sm btn-secondary" @click.prevent="ratingButton(comments.first_page_url)">First</button>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="barangay">Barangay:</label>
-                                <input type="text" class="form-control" id="barangay" v-model="barangay">
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                <button type="button" class="btn btn-sm btn-secondary" @click.prevent="ratingButton(comments.prev_page_url)">Previous</button>
+                                <button type="button" class="btn btn-sm btn-secondary" @click.prevent="ratingButton(comments.next_page_url)">Next</button>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="city">City:</label>
-                                <input type="text" class="form-control" id="city" v-model="city">
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <button type="button" class="btn btn-sm btn-secondary" @click.prevent="ratingButton(comments.last_page_url)">Last</button>
                             </div>
-                            <div class="form-group col-md-12">
-                                <label for="prov">Province:</label>
-                                <input type="text" class="form-control" id="prov" v-model="prov">
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="mobile">Mobile No:</label>
-                                <input type="text" class="form-control" id="mobile" v-model="mobile">
-                                <small id="mobileHelp" class="form-text text-muted">We'll never share your mobile number with anyone else.</small>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="email">Email:</label>
-                                <input type="text" class="form-control" id="email" v-model="email">
-                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="passwd">Password:</label>
-                                <input type="password" class="form-control" id="passwd" v-model="passwd">
-                                <!-- <small id="mobileHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                            </div>
-                            <div class="form-group col-md-12">
-                                <button type="button" class="btn btn-block btn-primary" @click.prevent="UpdateData">
-                                     Save
-                                </button>
-                            </div>
-                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
-
 <script>
 export default {
     data(){
         return{
-            fname:"",
-            mname:"",
-            lname:"",
-            add1: "",
-            add2: "",
-            barangay: "",
-            city: "",
-            prov: "",
-            mobile: "",
-            email: "",
-            passwd:"",
+            rating:'',
+            items: '',
+            loading: false,
+            comments: '',
+
         }
     },
     methods:{
-        async getData(){
-            this.loading = true;
-            const response = (await axios.get(`/api/user/view/`+this.$store.state.userId));
-            this.fname = response.data.first_name;
-            this.mname = response.data.middle_name;
-            this.lname = response.data.last_name;
-            this.add1 = response.data.address1;
-            this.add2 = response.data.address2;
-            this.barangay = response.data.barangay;
-            this.city = response.data.city;
-            this.prov = response.data.province;
-            this.mobile = response.data.mobile_number;
-            this.email = response.data.email;
-
-            this.loading = false;
-        },
-        async UpdateData(){
-                const formData = new FormData();
-                formData.append('first_name', this.fname);
-                formData.append('middle_name', this.mname);
-                formData.append('last_name', this.lname);
-                formData.append('address1', this.add1);
-                formData.append('address2', this.add2);
-                formData.append('barangay', this.barangay);
-                formData.append('city', this.city);
-                formData.append('province', this.prov);
-                formData.append('mobile_number', this.mobile);
-                formData.append('email', this.email);
-                formData.append('password', this.passwd);
-
-                try {
-
-                    const response = (await axios.post(`/api/user/update/`+this.$store.state.userId, formData));
-                    let pModal = this.$parent.$refs.pModal.$el;
-                    this.$parent.title = 'Success';
-                    this.$parent.message = 'Changes has been saved';
-                    $(pModal).modal('show');
-                    this.getData();
-
-                } catch (error) {
-                    let pModal = this.$parent.$refs.pModal.$el;
-                    this.$parent.title = 'Error';
-                    this.$parent.message = error;
-                    $(pModal).modal('show');
-                }
-        },
-        async 
+        async ratingButton(src){
+            const comments = (await axios.get(src));
+            this.comments = comments.data;
+        }
     },
-    created(){
+    async created(){
+        this.loading = true;
+
         if(this.$store.state.isLoggedIn){
-            this.getData();
+            try {
+                const response = (await axios.get(`/api/user/view/`+this.$store.state.userId));
+                this.items = response.data;
+                this.rating = response.data.ratings;
+
+            } catch (error) {
+                console.log('error with fetch user' + error);
+            }
+
+            try {
+                const comments = (await axios.get(`/api/rate/user/`+this.$store.state.userId));
+                this.comments = comments.data;
+            } catch (error) {
+                console.log('error with fetch comments' + error);
+            }
+
+        }else if(this.$store.state.userRole == 3){
+            let pModal              = this.$parent.$refs.pModal.$el;
+            this.$parent.title      = 'Authentication Error';
+            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+            this.$router.push({name:'Home'});
+            $(pModal).modal('show');
+
         }else{
-            let pModal = this.$parent.$refs.pModal.$el;
-            this.$parent.title = 'Authentication Error';
-            this.$parent.message = 'Please login to continue';
+            let pModal              = this.$parent.$refs.pModal.$el;
+            this.$parent.title      = 'Authentication Error';
+            this.$parent.message    = 'Please login to continue';
+
             this.$router.push({name:'Login'});
             $(pModal).modal('show');
         }
+
+        this.loading = false
     }
 
 }

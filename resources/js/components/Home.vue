@@ -8,7 +8,10 @@
             <p class="lead">
                 Debuhu is a company that let the customer design their desired product and put it up on our own bidding system where other printing companies will bid their price for product.
             </p>
-            <router-link :to="{name:'Editor'}" class="btn btn-primary btn-lg">
+            <router-link :to="{name:'Customer Registration'}" class="btn btn-primary btn-lg" v-if="!$store.state.isLoggedIn">
+               Register now
+            </router-link>
+            <router-link :to="{name:'Editor'}" class="btn btn-primary btn-lg" v-if="$store.state.isLoggedIn">
                 Start designing now
             </router-link>
 
@@ -72,7 +75,7 @@
 
             <div class="col-md-6 my-auto">
                 <h2 class="display-4">
-                    Cash on Delivery or GCash.
+                    Cash on Delivery.
                 </h2>
 
                 <p class="h6 text-danger ml-2">
@@ -91,7 +94,7 @@
                     Sign up as one of our printing partner.
                 </h1>
                 <div class="d-block pt-5">
-                    <router-link :to="{name: 'My Designs'}" class="btn btn-lg btn-primary px-5">
+                    <router-link :to="{name: 'Partner Registration'}" class="btn btn-lg btn-primary px-5">
                         Sign up
                     </router-link>
                 </div>
@@ -215,6 +218,10 @@ export default {
         },
         onVerify(response){
             if(response) this.inquiry.robot = true;
+        },
+        regModal(){
+            let regModal = this.$refs.regModal.$el;
+            $(regModal).modal('show');
         }
     }
 

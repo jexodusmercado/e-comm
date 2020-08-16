@@ -1,5 +1,3 @@
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
 require('./bootstrap');
 
 import VueRouter from "vue-router";
@@ -13,6 +11,7 @@ import RegModal from './components/shared/RegisterPopout';
 import imgModal from './components/shared/imgModal';
 import vModal from './components/shared/vImgModal';
 import offerModal from "./components/shared/offerModal.vue";
+import StarRating from 'vue-star-rating'
 import storeDefinition from "./store";
 
 window.Vue = require('vue');
@@ -27,6 +26,7 @@ Vue.component("RegModal", RegModal);
 Vue.component("Offer", offerModal);
 Vue.component("imageModal", imgModal);
 Vue.component("vModal", vModal);
+Vue.component('star-rating', StarRating);
 
 const store = new Vuex.Store(storeDefinition);
 
@@ -59,6 +59,5 @@ const app = new Vue({
         this.$store.dispatch("loadStoredState");
         this.$store.dispatch("loadUser");
     }
-
 
 });

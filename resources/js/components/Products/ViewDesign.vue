@@ -118,11 +118,34 @@
                         <button class="btn btn-primary" @click.prevent="updateStatus(3,deliver.id)"> Delivered </button>
                     </dt>
 
+                    <dt class="col-md-12 bg-secondary h2 text-white mt-3" v-show="$store.state.userRole == 1 && deliver.status == 3">
+                        Rate
+                    </dt>
+
+                    <div class="col-md-12 mt-3" v-show="!comments.length">
+                        <dt class="col-md-12 mt-3" v-show="$store.state.userRole == 1 && deliver.status == 3">
+                            <star-rating :increment="1" :max-rating="5" :show-rating="false" v-model="rating"> </star-rating>
+                        </dt>
+                        <dt class="col-md-12 mt-2" v-show="$store.state.userRole == 1 && deliver.status == 3">
+                              Comment:<textarea class="form-control" v-model="commentText"></textarea>
+                        </dt>
+                        <dt class="col-md-12 mt-2" v-show="$store.state.userRole == 1 && deliver.status == 3">
+                              <button class="btn btn-primary" @click.prevent="insertComment" :disabled="loading">Submit</button>
+                        </dt>
+                    </div>
+
+                    <div class="col-md-12 mt-3" v-show="comments.length">
+                        <dt class="col-md-12 mt-3" v-show="$store.state.userRole == 1 && deliver.status == 3">
+                           <h2 class="h4">You already rated this product!</h2>
+                        </dt>
+                    </div>
+
 
                 </dl>
             </div>
 
         </div>
+
     </div>
 </template>
 
@@ -156,14 +179,30 @@ export default {
                 console.log('fail to fetch deliverable' + error);
 
             }
+
+            try {
+
+                // console.log(this.items.id);
+                const comments = await (axios.get(`/api/rate/check/`+this.items.id+`/`+this.items.user_id));
+                this.comments = comments.data;
+
+            } catch (error) {
+                console.log('fail to fetch comments' + error);
+
+            }
             this.loading = false;
-        }else{
+        }else if(this.$store.state.userRole == 3){
             let pModal              = this.$parent.$refs.pModal.$el;
             this.$parent.title      = 'Authentication Error';
-            this.$parent.message    = 'Please login to continue';
-
-            this.$router.push({name:'Login'});
+            this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
+            this.$router.push({name:'Home'});
             $(pModal).modal('show');
+        }else{
+                let pModal              = this.$parent.$refs.pModal.$el;
+                this.$parent.title      = 'Authentication Error';
+                this.$parent.message    = 'Please login to continue';
+                this.$router.push({name:'Login'});
+                $(pModal).modal('show');
         }
 
     },
@@ -180,7 +219,10 @@ export default {
             userInfo: '',
             userId: this.$store.state.userId,
             loading:false,
-            status: ''
+            status: '',
+            comments:'',
+            rating: 0,
+            commentText: ''
         }
     },
     computed:{
@@ -188,6 +230,7 @@ export default {
             return this.$store.state.userRole;
         },
     },
+
     methods:{
         frontBtn(){
             this.image = this.items.imageFront;
@@ -198,6 +241,41 @@ export default {
         openOffer(){
             let offerModal = this.$refs.offerModal.$el;
             $(offerModal).modal('show');
+        },
+        async insertComment(){
+            this.loading = true;
+            let pModal     = this.$parent.$refs.pModal.$el;
+            const formData = new FormData();
+            try {
+                formData.append('product_id', this.items.id);
+                formData.append('buyer_id', this.items.user_id);
+                formData.append('seller_id', this.deliverable[0].seller_id);
+                formData.append('rating', this.rating);
+                formData.append('comment', this.commentText);
+
+                const response = (await axios.post(`/api/rate/save/`, formData));
+
+                if(200 == response.status){
+                    this.$parent.title   = 'Success!';
+                    this.$parent.message = 'Thank you for the rating. The seller will surely appreciate this.'
+                    $(pModal).modal('show');
+                }
+
+                const comments = await (axios.get(`/api/rate/check/`+this.items.id+`/`+this.items.user_id));
+                this.comments = comments.data;
+
+
+            } catch (error) {
+                    this.$parent.title   = 'Error!';
+                    this.$parent.message = 'You have already rate this product.'
+                    $(pModal).modal('show');
+
+
+            }
+
+
+
+            this.loading = false;
         },
         async placeBet($amount1, $amount2){
             this.loading   = true;
