@@ -204,7 +204,7 @@ import {fabric} from 'fabric';
                 formData.append("imageFront", data1);
                 formData.append("imageBack", data2);
                 formData.append("selectedProduct", this.selectedProduct);
-                formData.append("userId", "1");
+                formData.append("userId", this.$store.state.userId);
                 formData.append("XXS", this.XXS);
                 formData.append("XSM", this.XSM);
                 formData.append("SML", this.SML);

@@ -23,10 +23,6 @@ class ProductController extends Controller
                 Product::where('user_id', $id)
                 ->where('deleted_at', null)
                 ->whereIn('selectedProduct', $category)
-                ->whereHas('market', function ($query){
-                    return $query->where('active', 1);
-                })
-                ->with('market')
                 ->paginate(8)
             );
         }

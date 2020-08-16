@@ -4279,7 +4279,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 formData.append("imageFront", data1);
                 formData.append("imageBack", data2);
                 formData.append("selectedProduct", _this.selectedProduct);
-                formData.append("userId", "1");
+                formData.append("userId", _this.$store.state.userId);
                 formData.append("XXS", _this.XXS);
                 formData.append("XSM", _this.XSM);
                 formData.append("SML", _this.SML);
