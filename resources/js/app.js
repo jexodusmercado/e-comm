@@ -11,6 +11,7 @@ import RegModal from './components/shared/RegisterPopout';
 import imgModal from './components/shared/imgModal';
 import vModal from './components/shared/vImgModal';
 import offerModal from "./components/shared/offerModal.vue";
+import contactModal from "./components/shared/contactModal.vue";
 import StarRating from 'vue-star-rating'
 import storeDefinition from "./store";
 
@@ -26,6 +27,7 @@ Vue.component("RegModal", RegModal);
 Vue.component("Offer", offerModal);
 Vue.component("imageModal", imgModal);
 Vue.component("vModal", vModal);
+Vue.component("contact-modal", contactModal);
 Vue.component('star-rating', StarRating);
 
 const store = new Vuex.Store(storeDefinition);

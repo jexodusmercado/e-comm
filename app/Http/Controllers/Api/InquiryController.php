@@ -15,7 +15,7 @@ class InquiryController extends Controller
      */
     public function index()
     {
-        //
+        return Inquiry::all();
     }
 
     /**

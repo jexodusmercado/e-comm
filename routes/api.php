@@ -42,6 +42,7 @@ Route::prefix('market')->group(function () {
 
 Route::prefix('inquiries')->group(function (){
     Route::post('/save', 'Api\InquiryStoreController');
+    Route::get('/',   'Api\InquiryController@index');
 });
 
 Route::prefix('delivery')->group(function (){

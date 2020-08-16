@@ -93,7 +93,10 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown" v-if="isLoggedIn && userRole == '0'">
                 <ul class="navbar-nav ml-auto mr-5">
                     <li class="nav-item">
-                        <router-link :to="{ name: 'Approval'}" class="card-link px-2">DASHBOARD</router-link>
+                        <router-link :to="{ name: 'Contact'}" class="card-link px-2">INBOX</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{ name: 'Approval'}" class="card-link px-2">APPROVALS</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link :to="{ name: 'Home'}" class="card-link px-2">CONTACT US</router-link>

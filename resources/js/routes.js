@@ -10,6 +10,7 @@ import Jobs from './components/Products/Job.vue';
 import Profile from './components/Auth/Profile.vue';
 import Approval from './components/Auth/Approval.vue';
 import Settings from './components/Auth/Settings.vue';
+import Contact from './components/Auth/Contact.vue';
 
 
 const routes = [
@@ -77,6 +78,11 @@ const routes = [
         path: "/auth/profile/",
         component: Profile,
         name: "Profile"
+    },
+    {
+        path: "/auth/contact/",
+        component: Contact,
+        name: "Contact"
     },
     {
         path: "/auth/approval/",
