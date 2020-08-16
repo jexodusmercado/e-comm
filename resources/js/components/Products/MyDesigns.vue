@@ -212,7 +212,7 @@ export default {
                 let pModal   = this.$parent.$refs.pModal.$el;
 
                 try {
-                    const response = await axios.get(`/api/product/remove/`+pId);
+                    const response = await axios.get(`/api/products/remove/`+pId);
                     if(200 === response.status){
                         this.$parent.title = 'SUCCESS';
                         this.$parent.message = 'Product has been deleted';

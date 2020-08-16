@@ -4004,7 +4004,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 pModal = _this3.$parent.$refs.pModal.$el;
                 _context3.prev = 5;
                 _context3.next = 8;
-                return axios.get("/api/product/remove/" + pId);
+                return axios.get("/api/products/remove/" + pId);
 
               case 8:
                 response = _context3.sent;
@@ -5103,7 +5103,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 pModal = _this3.$parent.$refs.pModal.$el;
                 _context3.prev = 5;
                 _context3.next = 8;
-                return axios.get("/api/product/remove/" + pId);
+                return axios.get("/api/products/remove/" + pId);
 
               case 8:
                 response = _context3.sent;
@@ -5837,7 +5837,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 pModal = _this4.$parent.$refs.pModal.$el;
                 _context4.prev = 5;
                 _context4.next = 8;
-                return axios.get("/api/product/remove/" + pId);
+                return axios.get("/api/products/remove/" + pId);
 
               case 8:
                 response = _context4.sent;
