@@ -77124,7 +77124,10 @@ var staticRenderFns = [
       _c("li", { staticClass: "nav-item" }, [
         _c(
           "a",
-          { staticClass: "nav-link", attrs: { href: "http://localhost#wwd" } },
+          {
+            staticClass: "nav-link",
+            attrs: { href: "http://127.0.0.1:80/#wwd" }
+          },
           [_vm._v("WHAT WE OFFER")]
         )
       ]),
@@ -77132,7 +77135,10 @@ var staticRenderFns = [
       _c("li", { staticClass: "nav-item" }, [
         _c(
           "a",
-          { staticClass: "nav-link", attrs: { href: "http://localhost#pm" } },
+          {
+            staticClass: "nav-link",
+            attrs: { href: "http://127.0.0.1:80/#pm" }
+          },
           [_vm._v("PAYMENT SUPPORTED")]
         )
       ]),
@@ -77140,7 +77146,10 @@ var staticRenderFns = [
       _c("li", { staticClass: "nav-item" }, [
         _c(
           "a",
-          { staticClass: "nav-link", attrs: { href: "http://localhost#cu" } },
+          {
+            staticClass: "nav-link",
+            attrs: { href: "http://127.0.0.1:80/#cu" }
+          },
           [_vm._v("CONTACT US")]
         )
       ])

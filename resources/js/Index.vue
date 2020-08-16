@@ -37,13 +37,13 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown" v-if="!isLoggedIn">
                 <ul class="navbar-nav ml-auto mr-5">
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost#wwd">WHAT WE OFFER</a>
+                        <a class="nav-link" href="http://127.0.0.1:80/#wwd">WHAT WE OFFER</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost#pm">PAYMENT SUPPORTED</a>
+                        <a class="nav-link" href="http://127.0.0.1:80/#pm">PAYMENT SUPPORTED</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="http://localhost#cu">CONTACT US</a>
+                        <a class="nav-link" href="http://127.0.0.1:80/#cu">CONTACT US</a>
                     </li>
                 </ul>
             </div>
