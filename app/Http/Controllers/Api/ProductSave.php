@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
+use App\Market;
 
 class ProductSave extends Controller
 {
@@ -73,8 +74,16 @@ class ProductSave extends Controller
                 $product->totalQty = $totalQty;
                 $product->save();
 
+
+
 			    if($product->save()){
-			    	return response()->json([], 200);
+                    $lastId = $product->id;
+                    $market = new Market();
+                    $market->product_id = $lastId;
+                    $market->active = 1;
+                    $market->expired_at = date(now());
+                    $market->save();
+			        	return response()->json([], 200);
 			    }else{
 			    	return response()->json([], 404);
 			    }
