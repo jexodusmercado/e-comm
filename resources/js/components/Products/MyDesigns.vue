@@ -81,7 +81,7 @@
                     </p>
                     <div class="text-center font-weight-light">
                         <router-link :to="{name:'View Design', params: { id: item.product_id} }" class="btn btn-primary">VIEW</router-link>
-                        <button class="btn btn-danger" @click="deleteItem">DELETE</button>
+                        <button class="btn btn-danger" @click="deleteItem(item.product_id)">DELETE</button>
                     </div>
                   </div>
                 </div>
@@ -204,15 +204,14 @@ export default {
             }
 
         },
-        async deleteItem(){
+        async deleteItem(id){
             let alert = confirm('Are you sure?');
             if(alert == true){
                 this.loading = true;
-                const pId    = this.items.id;
                 let pModal   = this.$parent.$refs.pModal.$el;
 
                 try {
-                    const response = await axios.get(`/api/products/remove/`+pId);
+                    const response = await axios.get(`/api/products/remove/`+id);
                     if(200 === response.status){
                         this.$parent.title = 'SUCCESS';
                         this.$parent.message = 'Product has been deleted';

@@ -2088,174 +2088,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Auth/Approval.vue?vue&type=script&lang=js& ***!
   \************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      items: '',
-      loading: '',
-      imageData: ''
-    };
-  },
-  methods: {
-    openModal: function openModal(image) {
-      this.loading = true;
-      this.imageData = image;
-      var iModal = this.$refs.imgModal.$el;
-      $(iModal).modal('show');
-      this.loading = false;
-    },
-    approveThis: function approveThis(id) {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response, pModal;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _this.loading = true;
-                _context.next = 3;
-                return axios.get("/api/user/verify/" + id);
-
-              case 3:
-                response = _context.sent;
-                pModal = _this.$parent.$refs.pModal.$el;
-                _this.$parent.title = 'Success';
-                _this.$parent.message = 'Update has been a success';
-                $(pModal).modal('show');
-                _this.loading = false;
-
-              case 9:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  },
-  created: function created() {
-    var _this2 = this;
-
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var pModal, response, _pModal;
-
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              if (!_this2.$store.state.isLoggedIn) {
-                _context2.next = 10;
-                break;
-              }
-
-              _this2.loading = true;
-
-              if (_this2.$store.state.userRole == 3) {
-                pModal = _this2.$parent.$refs.pModal.$el;
-                _this2.$parent.title = 'Authentication Error';
-                _this2.$parent.message = 'You do not have any access to this yet. Wait for admin to approve your request.';
-
-                _this2.$router.push({
-                  name: 'Home'
-                });
-
-                $(pModal).modal('show');
-              }
-
-              _context2.next = 5;
-              return axios.get("/api/user/notVerified");
-
-            case 5:
-              response = _context2.sent;
-              _this2.items = response.data;
-              _this2.loading = false;
-              _context2.next = 15;
-              break;
-
-            case 10:
-              _pModal = _this2.$parent.$refs.pModal.$el;
-              _this2.$parent.title = 'Authentication Error';
-              _this2.$parent.message = 'Please login to continue';
-
-              _this2.$router.push({
-                name: 'Login'
-              });
-
-              $(_pModal).modal('show');
-
-            case 15:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2);
-    }))();
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /var/www/resources/js/components/Auth/Approval.vue: Identifier 'response' has already been declared (80:18)\n\n\u001b[0m \u001b[90m 78 | \u001b[39m            $(pModal)\u001b[33m.\u001b[39mmodal(\u001b[32m'show'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 79 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 80 | \u001b[39m            \u001b[36mconst\u001b[39m response \u001b[33m=\u001b[39m (await axios\u001b[33m.\u001b[39mget(\u001b[32m`/api/user/notVerified`\u001b[39m))\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 81 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mitems \u001b[33m=\u001b[39m response\u001b[33m.\u001b[39mdata\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 82 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 83 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mloading \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m;\u001b[39m\u001b[0m\n    at Parser._raise (/var/www/node_modules/@babel/parser/lib/index.js:757:17)\n    at Parser.raiseWithData (/var/www/node_modules/@babel/parser/lib/index.js:750:17)\n    at Parser.raise (/var/www/node_modules/@babel/parser/lib/index.js:744:17)\n    at ScopeHandler.checkRedeclarationInScope (/var/www/node_modules/@babel/parser/lib/index.js:4803:12)\n    at ScopeHandler.declareName (/var/www/node_modules/@babel/parser/lib/index.js:4769:12)\n    at Parser.checkLVal (/var/www/node_modules/@babel/parser/lib/index.js:9288:22)\n    at Parser.parseVarId (/var/www/node_modules/@babel/parser/lib/index.js:11884:10)\n    at Parser.parseVar (/var/www/node_modules/@babel/parser/lib/index.js:11859:12)\n    at Parser.parseVarStatement (/var/www/node_modules/@babel/parser/lib/index.js:11671:10)\n    at Parser.parseStatementContent (/var/www/node_modules/@babel/parser/lib/index.js:11270:21)\n    at Parser.parseStatement (/var/www/node_modules/@babel/parser/lib/index.js:11203:17)\n    at Parser.parseBlockOrModuleBlockBody (/var/www/node_modules/@babel/parser/lib/index.js:11778:25)\n    at Parser.parseBlockBody (/var/www/node_modules/@babel/parser/lib/index.js:11764:10)\n    at Parser.parseBlock (/var/www/node_modules/@babel/parser/lib/index.js:11748:10)\n    at Parser.parseFunctionBody (/var/www/node_modules/@babel/parser/lib/index.js:10751:24)\n    at Parser.parseFunctionBodyAndFinish (/var/www/node_modules/@babel/parser/lib/index.js:10734:10)\n    at Parser.parseMethod (/var/www/node_modules/@babel/parser/lib/index.js:10696:10)\n    at Parser.parseObjectMethod (/var/www/node_modules/@babel/parser/lib/index.js:10612:19)\n    at Parser.parseObjPropValue (/var/www/node_modules/@babel/parser/lib/index.js:10654:23)\n    at Parser.parseObjectMember (/var/www/node_modules/@babel/parser/lib/index.js:10578:10)\n    at Parser.parseObj (/var/www/node_modules/@babel/parser/lib/index.js:10487:25)\n    at Parser.parseExprAtom (/var/www/node_modules/@babel/parser/lib/index.js:10087:28)\n    at Parser.parseExprSubscripts (/var/www/node_modules/@babel/parser/lib/index.js:9688:23)\n    at Parser.parseMaybeUnary (/var/www/node_modules/@babel/parser/lib/index.js:9668:21)\n    at Parser.parseExprOps (/var/www/node_modules/@babel/parser/lib/index.js:9538:23)\n    at Parser.parseMaybeConditional (/var/www/node_modules/@babel/parser/lib/index.js:9511:23)\n    at Parser.parseMaybeAssign (/var/www/node_modules/@babel/parser/lib/index.js:9466:21)\n    at Parser.parseObjectProperty (/var/www/node_modules/@babel/parser/lib/index.js:10629:101)\n    at Parser.parseObjPropValue (/var/www/node_modules/@babel/parser/lib/index.js:10654:101)\n    at Parser.parseObjectMember (/var/www/node_modules/@babel/parser/lib/index.js:10578:10)\n    at Parser.parseObj (/var/www/node_modules/@babel/parser/lib/index.js:10487:25)\n    at Parser.parseExprAtom (/var/www/node_modules/@babel/parser/lib/index.js:10087:28)\n    at Parser.parseExprSubscripts (/var/www/node_modules/@babel/parser/lib/index.js:9688:23)\n    at Parser.parseMaybeUnary (/var/www/node_modules/@babel/parser/lib/index.js:9668:21)\n    at Parser.parseExprOps (/var/www/node_modules/@babel/parser/lib/index.js:9538:23)\n    at Parser.parseMaybeConditional (/var/www/node_modules/@babel/parser/lib/index.js:9511:23)");
 
 /***/ }),
 
@@ -5082,11 +4917,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee2, null, [[1, 8]]);
       }))();
     },
-    deleteItem: function deleteItem() {
+    deleteItem: function deleteItem(id) {
       var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var alert, pId, pModal, response;
+        var alert, pModal, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
@@ -5094,18 +4929,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 alert = confirm('Are you sure?');
 
                 if (!(alert == true)) {
-                  _context3.next = 18;
+                  _context3.next = 17;
                   break;
                 }
 
                 _this3.loading = true;
-                pId = _this3.items.id;
                 pModal = _this3.$parent.$refs.pModal.$el;
-                _context3.prev = 5;
-                _context3.next = 8;
-                return axios.get("/api/products/remove/" + pId);
+                _context3.prev = 4;
+                _context3.next = 7;
+                return axios.get("/api/products/remove/" + id);
 
-              case 8:
+              case 7:
                 response = _context3.sent;
 
                 if (200 === response.status) {
@@ -5114,25 +4948,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   $(pModal).modal('show');
                 }
 
-                _context3.next = 17;
+                _context3.next = 16;
                 break;
 
-              case 12:
-                _context3.prev = 12;
-                _context3.t0 = _context3["catch"](5);
+              case 11:
+                _context3.prev = 11;
+                _context3.t0 = _context3["catch"](4);
                 _this3.$parent.title = 'ERROR';
                 _this3.$parent.message = 'Something went wrong';
                 $(pModal).modal('show');
 
-              case 17:
+              case 16:
                 _this3.loading = false;
 
-              case 18:
+              case 17:
               case "end":
                 return _context3.stop();
             }
           }
-        }, _callee3, null, [[5, 12]]);
+        }, _callee3, null, [[4, 11]]);
       }))();
     }
   }
@@ -81773,7 +81607,11 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-danger",
-                        on: { click: _vm.deleteItem }
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteItem(item.product_id)
+                          }
+                        }
                       },
                       [_vm._v("DELETE")]
                     )

@@ -77,6 +77,9 @@ export default {
             this.$parent.message    = 'Update has been a success';
             $(pModal).modal('show');
 
+            const response = (await axios.get(`/api/user/notVerified`));
+            this.items = response.data;
+
             this.loading = false;
         }
     },
