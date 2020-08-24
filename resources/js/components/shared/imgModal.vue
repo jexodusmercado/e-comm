@@ -4,7 +4,7 @@
             <div class="container pt-5">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                            <img class="img-fluid" id="img1" :src="'http://127.0.0.1:80/uploads/'+img+'.png'">
+                            <img class="img-fluid" id="img1" :src="img">
                     </div>
                 </div>
 

@@ -58,6 +58,14 @@ Route::prefix('rate')->group(function (){
     Route::get('/count/{id}',  'Api\RatingController@totalStars');
     Route::get('/check/{id}/{buyerId}',  'Api\RatingController@showByBuyer');
     Route::post('/save',  'Api\RatingStoreController');
-
 });
 
+Route::prefix('shop')->group(function (){
+    Route::get('/',  'Api\ShopController@index');
+    Route::get('/{id}',  'Api\ShopController@show');
+    Route::get('/view/{id}',  'Api\ShopController@showPerItem');
+    Route::get('/update/{id}/{status}',  'Api\ShopController@toggleActivation');
+    Route::get('/delete/{id}',  'Api\ShopController@destroy');
+    Route::post('/save',  'Api\ShopController@store');
+    Route::post('/edit/{id}',  'Api\ShopController@update');
+});

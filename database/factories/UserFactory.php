@@ -27,7 +27,7 @@ $barangay = [
 
 $factory->define(User::class, function (Faker $faker) use ($barangay) {
     return [
-        'role' => $faker->numberBetween($min = 1, $max = 2),
+        'role' => $faker->numberBetween($min = 1, $max = 1),
         'first_name' => $faker->firstName,
         'middle_name' => $faker->lastName,
         'last_name' => $faker->lastName,

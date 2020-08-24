@@ -36,8 +36,8 @@ $factory->define(Product::class, function (Faker $faker) use ($photoSuffix, $pro
 
     return [
         'user_id' => $faker->randomDigitNot(0),
-        'imageFront' => $image .'_front',
-        'imageBack' => $image .'_back',
+        'imageFront' => $image .'_front.png',
+        'imageBack' => $image .'_back.png',
         'selectedProduct' => $faker->randomElement($product),
         'XXS' => $XXS,
         'XSM' => $XSM,

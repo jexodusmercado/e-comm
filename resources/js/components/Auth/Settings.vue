@@ -8,10 +8,10 @@
                                 <h1 class="text-center"> CHANGE YOUR PERSONAL INFORMATION </h1>
                             </div>
                             <hr class="my-5"/>
-                            <div class="form-group col-md-12">
+                            <!-- <div class="form-group col-md-12">
                                 <label for="file">Upload photo:</label>
                                 <input type="file" class="form-control" id="file" @change="onImageChange">
-                            </div>
+                            </div> -->
                             <div class="form-group col-md-12">
                                 <label for="fname">First name:</label>
                                 <input type="text" class="form-control" id="fname" v-model="fname">

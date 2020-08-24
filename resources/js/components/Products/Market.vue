@@ -60,7 +60,7 @@
         <div class="row">
             <div class="col-md-3 pt-2" v-for="(item, index) in items" :key="index">
                 <div class="card">
-                  <img class="card-img-top img-fluid" :src="thisURL+'/uploads/'+item.front" alt="">
+                  <img class="card-img-top img-fluid" :src="'/uploads/'+item.front" alt="">
                   <div class="card-body">
                     <p class="card-text"></p>
                     <div class="text-center font-weight-light">
@@ -131,7 +131,6 @@ export default {
             return{
                 items: [],
                 myId: this.$store.state.userId,
-                thisURL: 'http://127.0.0.1:80',
                 links:[],
                 current:'',
                 total:'',

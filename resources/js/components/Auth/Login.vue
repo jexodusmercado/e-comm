@@ -76,18 +76,19 @@ export default {
                     await axios.post('/login', formData);
                     logIn();
                     this.$store.dispatch("loadUser");
+
                     this.$router.push({name:"Home"});
 
                 } catch (error) {
 
                 }
             this.loading = false;
+
         }
     },
     created(){
         if(this.$store.state.isLoggedIn){
             this.$router.push({name:'Home'});
-
         }
     }
 }

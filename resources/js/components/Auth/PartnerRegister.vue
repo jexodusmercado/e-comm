@@ -16,10 +16,13 @@
                         <div class="card-body">
                             <div class="row">
 
+                            <div class="form-group col-md-12">
+                                <label for="company_name">Company name:</label>
+                                <input type="text" class="form-control" id="company_name" v-model="company_name" required>
+                            </div>
                             <div class="form-group col-md-4">
                                 <label for="fname">First name:</label>
                                 <input type="text" class="form-control" id="fname" v-model="fname" required>
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="mname">Middle name:</label>
@@ -29,12 +32,10 @@
                             <div class="form-group col-md-4">
                                 <label for="lname">Last name:</label>
                                 <input type="text" class="form-control" id="lname" v-model="lname" required>
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="add1">Address 1:</label>
                                 <input type="text" class="form-control" id="add1" v-model="add1" required>
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="add2">Address 2:</label>
@@ -45,17 +46,14 @@
                             <div class="form-group col-md-4">
                                 <label for="barangay">Barangay:</label>
                                 <input type="text" class="form-control" id="barangay" v-model="barangay" required>
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="city">City:</label>
                                 <input type="text" class="form-control" id="city" v-model="city" required>
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="prov">Province:</label>
                                 <input type="text" class="form-control" id="prov" v-model="prov" required>
-                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="mobile">Mobile No:</label>
@@ -70,12 +68,10 @@
                             <div class="form-group col-md-12">
                                 <label for="passwd">Password:</label>
                                 <input type="password" class="form-control" id="passwd" v-model="passwd" required>
-                                <!-- <small id="mobileHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="cpasswd">Confirm Password:</label>
                                 <input type="password" class="form-control" id="cpasswd" v-model="cpasswd" required>
-                                <!-- <small id="mobileHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                             </div>
                             <div class="form-group col-md-12">
                                 <label for="cpasswd">Verification ID:</label>
@@ -118,18 +114,19 @@ export default {
     data(){
         return{
             photo: [],
-            fname: null,
-            mname: null,
-            lname: null,
-            add1: null,
-            add2: null,
-            barangay: null,
-            city: null,
-            prov: null,
-            mobile: null,
-            email: null,
-            passwd: null,
-            cpasswd: null,
+            company_name: '',
+            fname: '',
+            mname: '',
+            lname: '',
+            add1: '',
+            add2: '',
+            barangay: '',
+            city: '',
+            prov: '',
+            mobile: '',
+            email: '',
+            passwd: '',
+            cpasswd: '',
             loading: false,
             verified: false,
             errors: []
@@ -142,6 +139,7 @@ export default {
             if(this.passwd == this.cpasswd){
                 if(this.verified == true){
                     formData.append('role', 3);
+                    formData.append('company_name', this.company_name);
                     formData.append('photo', this.photo);
                     formData.append('fname', this.fname);
                     formData.append('mname', this.mname);

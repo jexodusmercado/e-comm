@@ -215,6 +215,8 @@ import {fabric} from 'fabric';
                 formData.append("totalQty", this.totalQty);
 
 
+
+
                 if(file1.length == 0 || file2.length == 0){
                     this.error_data.title = "ERROR";
                     this.error_data.message ="NO GRAPHIC INSERTED";
@@ -229,21 +231,27 @@ import {fabric} from 'fabric';
                         this.loading = false;
                         $(errModal).modal('show');
                     }else{
-                        try {
-                            const response = await (axios.post(`/api/products/save`, formData));
-                            this.error_data.title = "SUCCESS";
-                            this.error_data.message = "Design has been saved!"
+                        if(this.$store.state.isLoggedIn){
+                            try {
+                                const response = await (axios.post(`/api/products/save`, formData));
+                                this.loading = false;
+                                this.$router.push({name: 'My Designs'})
+                                this.error_data.title = "SUCCESS";
+                                this.error_data.message = "Design has been saved!"
+                                let errModal = this.$refs.errModal.$el;
+                                $(errModal).modal('show');
+                            } catch (error) {
+                            }
+                        }else{
+                            this.error_data.title = "Success";
+                            this.error_data.message = "You got skills! To save or to put this in auction, please login or register."
                             let errModal = this.$refs.errModal.$el;
-                            this.loading = false;
                             $(errModal).modal('show');
-                            this.$router.push({name: 'My Designs'})
-                        } catch (error) {
 
+                            this.loading = false;
                         }
                     }
-
                 }
-
                 this.hide_back=false;
 
             },
@@ -323,21 +331,7 @@ import {fabric} from 'fabric';
             }
         },
         created(){
-            if(this.$store.state.isLoggedIn){
-                if(this.$store.state.userRole == 3){
-                let pModal              = this.$parent.$refs.pModal.$el;
-                this.$parent.title      = 'Authentication Error';
-                this.$parent.message    = 'You do not have any access to this yet. Wait for admin to approve your request.';
-                this.$router.push({name:'Home'});
-                $(pModal).modal('show');
-                }
-            }else{
-                let pModal              = this.$parent.$refs.pModal.$el;
-                this.$parent.title      = 'Authentication Error';
-                this.$parent.message    = 'Please login to continue';
-                this.$router.push({name:'Login'});
-                $(pModal).modal('show');
-            }
+
         }
 
     }

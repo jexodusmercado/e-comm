@@ -8,10 +8,8 @@
             <p class="lead">
                 Debuhu is a company that let the customer design their desired product and put it up on our own bidding system where other printing companies will bid their price for product.
             </p>
-            <router-link :to="{name:'Customer Registration'}" class="btn btn-primary btn-lg" v-if="!$store.state.isLoggedIn">
-               Register now
-            </router-link>
-            <router-link :to="{name:'Editor'}" class="btn btn-primary btn-lg" v-if="$store.state.isLoggedIn">
+
+            <router-link :to="{name:'Editor'}" class="btn btn-primary btn-lg">
                 Start designing now
             </router-link>
 

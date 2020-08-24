@@ -6,7 +6,7 @@ export default {
         isLoggedIn: false,
         userId: null,
         userRole: null,
-        user: {}
+        user: {},
     },
     mutations:{
         setUser(state, payload){
@@ -25,6 +25,11 @@ export default {
     },
     actions:{
         async loadStoredState(context){
+
+            const formData = localStorage.getItem('formData');
+            if(formData){
+                context.commit('setFormData', JSON.parse(formData));
+            }
 
             context.commit("setLoggedIn", isLoggedIn());
             context.commit("setUserId", isUserId());
@@ -47,9 +52,9 @@ export default {
                 }
             }
         },
-
         logout({ commit }){
             commit("setUser", {});
+            commit("setUserId", {});
             commit("setLoggedIn", false);
             commit("setRoleId", null);
             logOut();

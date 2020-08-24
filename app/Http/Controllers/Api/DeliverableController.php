@@ -23,7 +23,7 @@ class DeliverableController extends Controller
                           ->whereHas('product', function ($query){
                               return $query->where('deleted_at', null);
                           })
-                          ->orderBy('created_at', 'asc')
+                          ->orderBy('created_at', 'desc')
                           ->paginate(8)
 
         );
@@ -37,7 +37,7 @@ class DeliverableController extends Controller
                           ->whereHas('product', function ($query){
                               return $query->where('deleted_at', null);
                           })
-                          ->orderBy('created_at', 'asc')
+                          ->orderBy('created_at', 'desc')
                           ->paginate(8)
 
         );

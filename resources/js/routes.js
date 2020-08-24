@@ -11,6 +11,11 @@ import Profile from './components/Auth/Profile.vue';
 import Approval from './components/Auth/Approval.vue';
 import Settings from './components/Auth/Settings.vue';
 import Contact from './components/Auth/Contact.vue';
+import MyShop from './components/Shop/MyShop.vue';
+import ViewItemShop from './components/Shop/ViewShopItem.vue';
+import AddItemShop from './components/Shop/AddItemShop.vue';
+import EditItemShop from './components/Shop/EditItemShop.vue';
+import Shop from './components/Shop/Shop.vue';
 
 
 const routes = [
@@ -88,6 +93,31 @@ const routes = [
         path: "/auth/approval/",
         component: Approval,
         name: "Approval"
+    },
+    {
+        path: "/shop/myshop/",
+        component: MyShop,
+        name: "My Shop"
+    },
+    {
+        path: "/shop/view/:id",
+        component: ViewItemShop,
+        name: "View Item"
+    },
+    {
+        path: "/shop/add/",
+        component: AddItemShop,
+        name: "Add Item"
+    },
+    {
+        path: "/shop/edit/:id",
+        component: EditItemShop,
+        name: "Edit Item"
+    },
+    {
+        path: "/shop/",
+        component: Shop,
+        name: "Shop"
     },
 
 

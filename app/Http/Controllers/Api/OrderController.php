@@ -4,32 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Product;
-use App\Http\Resources\ProductIndexResource;
-use App\Http\Resources\ProductShowResource;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index()
     {
-        $category   = $request->query('category');
-        if($category){
-            return ProductIndexResource::collection(
-                Product::where('user_id', $id)
-                ->where('deleted_at', null)
-                ->whereIn('selectedProduct', $category)
-                ->whereHas('market', function ($query){
-                    return $query->where('active', 1);
-                })
-                ->paginate(8)
-            );
-        }
-
+        //
     }
 
     /**
@@ -61,8 +46,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-            return Product::where('deleted_at',null)
-                          ->findOrFail($id);
+        //
     }
 
     /**
@@ -73,16 +57,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail($id);
-
-        if($product){
-            $product->deleted_at = date(now());
-            $product->save();
-
-            return response()->json([]);
-        }else{
-            return response()->json([], 404);
-        }
+        //
     }
 
     /**
@@ -94,6 +69,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $order = new Order;
+        $order->buyer_id = $request->buyer_id;
+        
 
     }
 

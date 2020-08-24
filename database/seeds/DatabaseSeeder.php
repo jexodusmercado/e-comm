@@ -36,7 +36,6 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             ProductTableSeeder::class,
             MarketSeeder::class,
-            AuctionLinesSeeder::class,
         ]);
 
 

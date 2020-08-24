@@ -4,47 +4,46 @@
         <div class="container">
             <button @click="$router.go(-1)" class="btn btn-secondary btn-sm mt-3"> BACK </button>
             <div class="row mt-5">
-                <!-- <div class="col-md-3">
-                    <img :src="'http://localhost/profiles/no_profile.jpg'" class="img-fluid" />
-                    <h3 class="text-center mt-3"> {{ items.first_name }} {{ items.last_name }}</h3>
-                    <star-rating :read-only="true" v-model="items.ratings" :show-rating="false"> </star-rating>
-                </div> -->
                 <div class="col-md-12">
                     <div class="row">
-                        <h3 class="mt-3 mr-3"> {{ items.first_name }} {{ items.last_name }}</h3>
-                        <star-rating :read-only="true" v-model="items.ratings" :show-rating="false"> </star-rating>
-                        <div class="col-md-12 bg-secondary text-white">
-                             INFORMATION
-                        </div>
+
                         <div class="col-md-12">
-                        <dl class="row">
+                            <h2 class="m-5 display-4" v-if="this.$store.state.userRole == 1"> {{ items.first_name }} {{ items.last_name }}</h2>
+                            <h2 class="m-5 display-4" v-if="this.$store.state.userRole == 2 || this.$store.state.userRole == 3"> {{ items.company_name }}</h2>
+                        </div>
+
+                        <div class="col-md-12 bg-secondary text-white">
+                             <p class="h6 my-2"> INFORMATION </p>
+                        </div>
+
+                        <div class="col-md-12">
+                            <dl class="row">
                                 <dt class="col-md-4">User ID:</dt>
                                 <dd class="col-md-8">{{ items.id }}</dd>
-
                                 <dt class="col-md-4">Role:</dt>
                                 <dd class="col-md-8" v-if="items.role==0">Admin</dd>
                                 <dd class="col-md-8" v-if="items.role==1">Buyer</dd>
                                 <dd class="col-md-8" v-if="items.role==2">Seller</dd>
-
+                                <dd class="col-md-8" v-if="items.role==3">Seller</dd>
                                 <dt class="col-md-4">Address:</dt>
                                 <dd class="col-md-8">{{  items.address1 }} {{ items.address2 }}, {{items.barangay}}, {{items.city}}, {{items.province}}</dd>
-
                                 <dt class="col-md-4">Mobile number:</dt>
                                 <dd class="col-md-8">{{ items.mobile_number }} </dd>
-
                                 <dt class="col-md-4">Email Address:</dt>
                                 <dd class="col-md-8"> {{ items.email }} </dd>
-
                             </dl>
                         </div>
 
                         <div class="col-md-12 bg-secondary text-white" v-if="this.$store.state.userRole == 2">
-                             RATING
+                             <p class="h6 my-2"> Rating & Review </p>
+                        </div>
+                        <div class="col-md-12 mt-3">
+                            <star-rating :read-only="true" v-model="items.ratings" :show-rating="false" v-if="this.$store.state.userRole == 2"> </star-rating>
                         </div>
                         <div class="col-md-12 mt-3" v-for="(comment, index) in comments.data" :key="index" >
                             <dl class="row" v-if="this.$store.state.userRole == 2">
                                 <div class="col-md-3">
-                                    <img :src="'http://127.0.0.1:80/uploads/'+comment.product.imageFront+'.png'" class='img-fluid'>
+                                    <img :src="'/uploads/'+comment.product.imageFront" class='img-fluid'>
                                     <star-rating :read-only="true" :rating="Number(comment.rating)" :star-size="25" :show-rating="false"> </star-rating>
                                 </div>
                                 <div class="col-md-12">

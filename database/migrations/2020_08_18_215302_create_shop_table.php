@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeliverableTable extends Migration
+class CreateShopTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateDeliverableTable extends Migration
      */
     public function up()
     {
-        Schema::create('deliverables', function (Blueprint $table) {
+        Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('shop_id')->nullable();
-            $table->unsignedBigInteger('product_id')->index();
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->unsignedBigInteger('buyer_id')->index();
-            $table->foreign('buyer_id')->references('id')->on('users');
             $table->unsignedBigInteger('seller_id')->index();
             $table->foreign('seller_id')->references('id')->on('users');
-            $table->smallInteger('status')->default(1);
+            $table->string('item_name');
+            $table->longText('description');
+            $table->string('photo');
+            $table->string('price');
+            $table->string('qty');
+            $table->smallInteger('active')->default(0);
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateDeliverableTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deliverable');
+        Schema::dropIfExists('shop');
     }
 }

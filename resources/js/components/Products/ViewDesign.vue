@@ -6,7 +6,7 @@
         <div class="row pt-3">
             <div class="col-md-6 bg-white text-center">
                 <div class="card border-white">
-                  <img class="card-img-top img-fluid " :style="'height:auto; width:700px;'" :src="'http://127.0.0.1:80/uploads/'+image" alt="">
+                  <img class="card-img-top img-fluid " :style="'height:auto; width:700px;'" :src="'/uploads/'+image" alt="">
                   <div class="card-body">
                     <p class="card-text"></p>
                     <div class="text-center font-weight-light">
@@ -25,6 +25,8 @@
                     <dd class="col-md-6">{{ userInfo.city }},{{ userInfo.province }}</dd>
                     <dt class="col-md-6">Email:</dt>
                     <dd class="col-md-6">{{ userInfo.email }}</dd>
+                    <dt class="col-md-6">Mobile number:</dt>
+                    <dd class="col-md-6">{{ userInfo.mobile_number   }}</dd>
                     <dt class="col-md-6">Payment Method:</dt>
                     <dd class="col-md-6">CASH ON DELIVERY</dd>
                 </dl>

@@ -61,6 +61,9 @@
                          <router-link :to="{ name: 'Delivery Status'}" class="card-link px-2">OFFERS</router-link>
                     </li>
                     <li class="nav-item">
+                         <router-link :to="{ name: 'Shop'}" class="card-link px-2">SHOP</router-link>
+                    </li>
+                    <li class="nav-item">
                          <a href="http://localhost#cu" class="card-link px-2">CONTACT US</a>
                     </li>
                 </ul>
@@ -77,6 +80,9 @@
                     </li>
                     <li class="nav-item">
                         <router-link :to="{ name: 'Jobs'}" class="card-link px-2">JOB</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link :to="{ name: 'My Shop'}" class="card-link px-2">MY SHOP</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link :to="{ name: 'Home'}" class="card-link px-2">CONTACT US</router-link>
@@ -122,6 +128,8 @@
 import { mapState, mapGetters } from "vuex";
 export default {
     beforeMount(){
+        //console.log(this.$route.name);
+        //console.log(this.$store.state.formData.length)
     },
     data(){
         return{
@@ -134,18 +142,21 @@ export default {
             isLoggedIn: "isLoggedIn",
             user:"user",
             userId:"userId",
-            userRole:"userRole"
+            userRole:"userRole",
         })
 
     },
     methods:{
         accLogout(){
             try {
-            axios.post("/logout");
-            this.$store.dispatch("logout");
-            this.$router.push({name: "Home"});
+                axios.post("/logout");
+                this.$store.dispatch("logout");
+
+                if(this.$route.name != "Home"){
+                    this.$router.push({name: "Home"});
+                }
             } catch (error) {
-            this.$store.dispatch("logout");
+                this.$store.dispatch("logout");
             }
         },
         regModal(){

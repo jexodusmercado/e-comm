@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->smallInteger('ratings')->default(0);
             $table->string('verification_id_img')->nullable();
             $table->string('profile_img')->default('no_profile.jpg');
+            $table->string('company_name')->nullable();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
